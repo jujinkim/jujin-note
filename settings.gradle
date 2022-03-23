@@ -14,3 +14,10 @@ dependencyResolutionManagement {
 }
 rootProject.name = "JujinNote"
 include ':app'
+include ':domain'
+include ':network'
+include ':data'
+include ':model'
+include ':ui'
+include ':util'
+include ':core'
