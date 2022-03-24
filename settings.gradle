@@ -16,7 +16,7 @@ rootProject.name = "JujinNote"
 include ':app'
 include ':domain'
 include ':network'
-include ':data'
+include ':database'
 include ':model'
 include ':ui'
 include ':util'
