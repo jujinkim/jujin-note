@@ -2,7 +2,7 @@ buildscript {
     ext {
         compose_version = '1.1.1'
         dagger_version = '2.41'
-        reduxkotlin_version = '0.5.6'
+        reduxkotlin_version = '0.5.5'
     }
 
     dependencies {
