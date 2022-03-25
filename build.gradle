@@ -1,7 +1,14 @@
 buildscript {
     ext {
         compose_version = '1.1.1'
+        dagger_version = '2.41'
+        reduxkotlin_version = '0.5.6'
     }
+
+    dependencies {
+        classpath "com.google.dagger:hilt-android-gradle-plugin:$dagger_version"
+    }
+
 }// Top-level build file where you can add configuration options common to all sub-projects/modules.
 plugins {
     id 'com.android.application' version '7.1.2' apply false
