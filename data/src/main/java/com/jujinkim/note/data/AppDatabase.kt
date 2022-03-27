@@ -11,4 +11,8 @@ import com.jujinkim.note.data.entity.Note
 abstract class AppDatabase : RoomDatabase() {
     abstract fun noteDao(): NoteDao
     abstract fun categoryDao(): CategoryDao
+
+    companion object {
+        const val DB_NAME = "jujin-note-db"
+    }
 }
