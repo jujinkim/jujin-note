@@ -4,5 +4,5 @@ data class Note(
     val id: String,
     val content: String,
     val generatedTime: Long,
-    val timeToLive: Long = -1
+    val expiredTime: Long = -1
 )
