@@ -31,6 +31,8 @@ android {
 }
 
 dependencies {
+    implementation project(path: ':model')
+
     implementation("androidx.room:room-runtime:$roomVersion")
     annotationProcessor("androidx.room:room-compiler:$roomVersion")
 
