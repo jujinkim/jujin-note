@@ -1,37 +1,37 @@
 package com.jujinkim.note.data.dao
 
 import androidx.room.*
-import com.jujinkim.note.data.entity.Note
+import com.jujinkim.note.data.entity.NoteEntity
 
 @Dao
 interface NoteDao {
-    @Insert
-    fun insert(note: Note)
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    fun insert(noteEntity: NoteEntity)
 
-    @Insert
-    fun insertAll(vararg notes: Note)
-
-    @Delete
-    fun delete(note: Note)
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    fun insertAll(vararg noteEntities: NoteEntity)
 
     @Delete
-    fun deleteAll(vararg notes: Note)
+    fun delete(noteEntity: NoteEntity)
+
+    @Delete
+    fun deleteAll(vararg noteEntities: NoteEntity)
 
     @Delete
     fun deleteAll()
 
     @Update
-    fun update(note: Note)
+    fun update(noteEntity: NoteEntity)
 
     @Update
-    fun updateAll(vararg notes: Note)
+    fun updateAll(vararg noteEntities: NoteEntity)
 
-    @Query("SELECT * FROM Note WHERE id = :id")
-    fun get(id: String): Note
+    @Query("SELECT * FROM note WHERE id = :id")
+    fun get(id: String): NoteEntity
 
-    @Query("SELECT * FROM Note WHERE category_id = :catId")
-    fun getAllByCategory(catId: String): List<Note>
+    @Query("SELECT * FROM note WHERE category_id = :catId")
+    fun getAllByCategory(catId: String): List<NoteEntity>
 
-    @Query("SELECT * FROM Note")
-    fun getAll(): List<Note>
+    @Query("SELECT * FROM note")
+    fun getAll(): List<NoteEntity>
 }

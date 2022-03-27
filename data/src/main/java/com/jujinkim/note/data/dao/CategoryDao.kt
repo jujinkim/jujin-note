@@ -1,32 +1,32 @@
 package com.jujinkim.note.data.dao
 
 import androidx.room.*
-import com.jujinkim.note.data.entity.Category
+import com.jujinkim.note.data.entity.CategoryEntity
 
 @Dao
 interface CategoryDao {
-    @Insert
-    fun insert(category: Category)
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    fun insert(categoryEntity: CategoryEntity)
 
-    @Insert
-    fun insertAll(vararg category: Category)
-
-    @Delete
-    fun delete(category: Category)
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    fun insertAll(vararg categoryEntity: CategoryEntity)
 
     @Delete
-    fun deleteAll(vararg category: Category)
+    fun delete(categoryEntity: CategoryEntity)
+
+    @Delete
+    fun deleteAll(vararg categoryEntity: CategoryEntity)
 
     @Update
-    fun update(category: Category)
+    fun update(categoryEntity: CategoryEntity)
 
     @Update
-    fun updateAll(vararg category: Category)
+    fun updateAll(vararg categoryEntity: CategoryEntity)
 
-    @Query("SELECT * FROM Category WHERE id = :catId")
-    fun get(catId: String): Category
+    @Query("SELECT * FROM category WHERE id = :catId")
+    fun get(catId: String): CategoryEntity
 
-    @Query("SELECT * FROM Category")
-    fun getAll(): List<Category>
+    @Query("SELECT * FROM category")
+    fun getAll(): List<CategoryEntity>
 
 }
