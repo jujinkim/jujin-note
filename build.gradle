@@ -3,6 +3,7 @@ buildscript {
         compose_version = '1.1.1'
         dagger_version = '2.41'
         reduxkotlin_version = '0.5.5'
+        roomVersion = '2.4.2'
     }
 
     dependencies {
