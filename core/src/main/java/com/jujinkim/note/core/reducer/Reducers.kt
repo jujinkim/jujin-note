@@ -19,5 +19,4 @@ fun notesReducer(state: AppState, action: NoteAction) =
         is LoadCategories -> NoteReducers().loadCategory(state)
         is LoadNotes -> NoteReducers().loadNotes(state, action.category)
         is CheckNoteHasExpired -> NoteReducers().checkNoteHasExpired(state, action.note)
-        else -> state
     }
