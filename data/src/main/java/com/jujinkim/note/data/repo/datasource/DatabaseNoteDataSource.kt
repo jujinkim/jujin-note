@@ -7,7 +7,7 @@ import com.jujinkim.note.model.Note
 import com.jujinkim.note.model.NoteCategory
 import javax.inject.Inject
 
-class DatabaseNoteDataSource: NoteDataSource {
+class DatabaseNoteDataSource @Inject constructor(): NoteDataSource {
     @Inject
     lateinit var db: AppDatabase
 

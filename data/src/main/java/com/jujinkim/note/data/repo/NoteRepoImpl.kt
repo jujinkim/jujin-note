@@ -4,7 +4,9 @@ import com.jujinkim.note.data.repo.datasource.DatabaseNoteDataSource
 import com.jujinkim.note.model.Note
 import com.jujinkim.note.model.NoteCategory
 import javax.inject.Inject
+import javax.inject.Singleton
 
+@Singleton
 class NoteRepoImpl @Inject constructor(
     private val databaseDataSource: DatabaseNoteDataSource
 ): NoteRepo {
