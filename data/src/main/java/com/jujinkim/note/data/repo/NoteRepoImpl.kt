@@ -1,42 +1,50 @@
 package com.jujinkim.note.data.repo
 
+import com.jujinkim.note.data.repo.datasource.DatabaseNoteDataSource
 import com.jujinkim.note.model.Note
 import com.jujinkim.note.model.NoteCategory
+import javax.inject.Inject
 
-class NoteRepoImpl: NoteRepo {
+class NoteRepoImpl @Inject constructor(
+    private val databaseDataSource: DatabaseNoteDataSource
+): NoteRepo {
+    private var dataSource = databaseDataSource
+
     override fun getNote(id: String): Note {
-        TODO("Not yet implemented")
+        return dataSource.getNote(id)
     }
 
     override fun getNotes(catId: String): List<Note> {
-        TODO("Not yet implemented")
+        return dataSource.getNotes(catId)
     }
 
     override fun getAllNotes(): List<Note> {
-        TODO("Not yet implemented")
+        return dataSource.getAllNotes()
     }
 
     override fun getCategory(catId: String): NoteCategory {
-        TODO("Not yet implemented")
+        return dataSource.getCategory(catId)
     }
 
     override fun getCategories(): List<NoteCategory> {
-        TODO("Not yet implemented")
+        return dataSource.getCategories()
     }
 
     override fun saveNote(note: Note, isNew: Boolean) {
-        TODO("Not yet implemented")
+        return dataSource.saveNote(note, isNew)
     }
 
     override fun saveNotes(notes: List<Note>, isNew: Boolean) {
-        TODO("Not yet implemented")
+        return dataSource.saveNotes(notes, isNew)
     }
 
     override fun saveCategory(category: NoteCategory, isNew: Boolean) {
-        TODO("Not yet implemented")
+        return dataSource.saveCategory(category, isNew)
     }
 
     override fun saveCategories(categories: List<NoteCategory>, isNew: Boolean) {
-        TODO("Not yet implemented")
+        return dataSource.saveCategories(categories, isNew)
     }
+
+    override fun getCurrentDataSource() = dataSource
 }

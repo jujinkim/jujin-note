@@ -1,4 +1,4 @@
-package com.jujinkim.note.data.repo
+package com.jujinkim.note.data.repo.datasource
 
 import com.jujinkim.note.data.AppDatabase
 import com.jujinkim.note.data.entity.toEntity
@@ -7,7 +7,7 @@ import com.jujinkim.note.model.Note
 import com.jujinkim.note.model.NoteCategory
 import javax.inject.Inject
 
-class DatabaseNoteRepoImpl: NoteRepo {
+class DatabaseNoteDataSource: NoteDataSource {
     @Inject
     lateinit var db: AppDatabase
 
