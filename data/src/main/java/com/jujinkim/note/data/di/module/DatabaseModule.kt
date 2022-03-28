@@ -16,7 +16,7 @@ import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
-abstract class DatabaseModule {
+object DatabaseModule {
     @Provides
     @Singleton
     fun provideDatabase(@ApplicationContext context: Context): RoomDatabase {
@@ -26,7 +26,4 @@ abstract class DatabaseModule {
             AppDatabase.DB_NAME
         ).build()
     }
-
-    @Binds
-    abstract fun bindNoteRepo(repoImpl: NoteRepoImpl): NoteRepo
 }

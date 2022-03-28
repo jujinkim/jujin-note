@@ -6,8 +6,8 @@ import com.jujinkim.note.model.Note
 import com.jujinkim.note.model.NoteCategory
 import javax.inject.Inject
 
-object NoteReducers {
-    @set:Inject
+class NoteReducers {
+    @Inject
     lateinit var noteRepo: NoteRepo
 
     fun addNote(state: AppState, note: Note) = state.copy().apply {
