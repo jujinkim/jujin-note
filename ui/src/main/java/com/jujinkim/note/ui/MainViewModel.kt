@@ -1,6 +1,8 @@
 package com.jujinkim.note.ui
 
-import androidx.lifecycle.MutableLiveData
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import com.jujinkim.note.core.AppScreen
 import com.jujinkim.note.core.AppState
@@ -9,13 +11,13 @@ import org.reduxkotlin.Store
 import javax.inject.Inject
 
 @HiltViewModel
-class MainActivityViewModel @Inject constructor(
+class MainViewModel @Inject constructor(
     private val store: Store<AppState>
 ) : ViewModel() {
-    val currentScreen = MutableLiveData(AppScreen.CATEGORY_LIST)
+    var currentScreen by mutableStateOf(AppScreen.CATEGORY_LIST)
 
     private val unsubscribe = store.subscribe {
-        currentScreen.value = store.state.currentScreen
+        currentScreen = store.state.currentScreen
     }
 
     override fun onCleared() {
