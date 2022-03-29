@@ -3,13 +3,14 @@ package com.jujinkim.note.ui
 import androidx.compose.foundation.layout.Row
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.jujinkim.note.core.AppScreen
 import com.jujinkim.note.ui.categorylist.NoteCategoryListContent
 import com.jujinkim.note.ui.notelist.NoteListContent
 
 @Composable
-fun MainActivityPhoneContent() {
-    when (localMainViewModel.current.currentScreen) {
+fun MainActivityPhoneContent(viewModel: MainViewModel = hiltViewModel()) {
+    when (viewModel.currentScreen) {
         AppScreen.CATEGORY_LIST -> NoteCategoryListContent()
         AppScreen.NOTE_LIST -> NoteListContent()
         AppScreen.SETTING -> TODO()
@@ -17,11 +18,11 @@ fun MainActivityPhoneContent() {
 }
 
 @Composable
-fun MainActivityTabletContent() {
+fun MainActivityTabletContent(viewModel: MainViewModel = hiltViewModel()) {
     Row(verticalAlignment = Alignment.CenterVertically) {
         NoteCategoryListContent()
 
-        when (localMainViewModel.current.currentScreen) {
+        when (viewModel.currentScreen) {
             AppScreen.CATEGORY_LIST, AppScreen.NOTE_LIST -> NoteListContent()
             AppScreen.SETTING -> TODO()
         }
