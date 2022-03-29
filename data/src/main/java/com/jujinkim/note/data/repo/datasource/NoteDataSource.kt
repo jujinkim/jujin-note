@@ -14,4 +14,10 @@ interface NoteDataSource {
     fun saveNotes(notes: List<Note>, isNew: Boolean = true)
     fun saveCategory(category: NoteCategory, isNew: Boolean = true)
     fun saveCategories(categories: List<NoteCategory>, isNew: Boolean = true)
+
+    fun deleteNote(note: Note)
+    fun deleteNote(id: String)
+    fun deleteNotes(notes: List<Note>)
+    fun deleteCategory(category: NoteCategory)
+    fun deleteCategory(catId: String)
 }

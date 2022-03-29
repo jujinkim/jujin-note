@@ -51,4 +51,24 @@ class DatabaseNoteDataSource @Inject constructor(): NoteDataSource {
             db.categoryDao().updateAll(*categories.map { it.toEntity() }.toTypedArray())
         }
     }
+
+    override fun deleteNote(note: Note) {
+        db.noteDao().delete(note.toEntity())
+    }
+
+    override fun deleteNote(id: String) {
+        db.noteDao().delete(id)
+    }
+
+    override fun deleteNotes(notes: List<Note>) {
+        db.noteDao().deleteAll(*notes.map { it.toEntity() }.toTypedArray())
+    }
+
+    override fun deleteCategory(category: NoteCategory) {
+        db.categoryDao().delete(category.toEntity())
+    }
+
+    override fun deleteCategory(catId: String) {
+        db.categoryDao().delete(catId)
+    }
 }
