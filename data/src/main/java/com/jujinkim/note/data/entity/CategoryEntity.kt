@@ -3,7 +3,7 @@ package com.jujinkim.note.data.entity
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import com.jujinkim.note.model.NoteCategory
+import com.jujinkim.note.model.Category
 
 @Entity(tableName = "category")
 data class CategoryEntity(
@@ -12,6 +12,6 @@ data class CategoryEntity(
     @ColumnInfo(name = "icon") val icon: Int
 )
 
-fun CategoryEntity.toModel() = NoteCategory(id, title, icon)
+fun CategoryEntity.toModel() = Category(id, title, icon)
 
-fun NoteCategory.toEntity() = CategoryEntity(id, title, icon)
+fun Category.toEntity() = CategoryEntity(id, title, icon)

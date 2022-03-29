@@ -1,6 +1,5 @@
 package com.jujinkim.note.ui.categorylist
 
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -10,10 +9,10 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.jujinkim.note.model.NoteCategory
+import com.jujinkim.note.model.Category
 
 @Composable
-fun CategoryListItem(category: NoteCategory) {
+fun CategoryListItem(category: Category) {
     Row(
         modifier = Modifier
             .padding(16.dp)

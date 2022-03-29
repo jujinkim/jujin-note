@@ -2,7 +2,7 @@ package com.jujinkim.note.data.repo
 
 import com.jujinkim.note.data.repo.datasource.DatabaseNoteDataSource
 import com.jujinkim.note.model.Note
-import com.jujinkim.note.model.NoteCategory
+import com.jujinkim.note.model.Category
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -24,11 +24,11 @@ class NoteRepoImpl @Inject constructor(
         return dataSource.getAllNotes()
     }
 
-    override fun getCategory(catId: String): NoteCategory {
+    override fun getCategory(catId: String): Category {
         return dataSource.getCategory(catId)
     }
 
-    override fun getCategories(): List<NoteCategory> {
+    override fun getCategories(): List<Category> {
         return dataSource.getCategories()
     }
 
@@ -40,11 +40,11 @@ class NoteRepoImpl @Inject constructor(
         return dataSource.saveNotes(notes, isNew)
     }
 
-    override fun saveCategory(category: NoteCategory, isNew: Boolean) {
+    override fun saveCategory(category: Category, isNew: Boolean) {
         return dataSource.saveCategory(category, isNew)
     }
 
-    override fun saveCategories(categories: List<NoteCategory>, isNew: Boolean) {
+    override fun saveCategories(categories: List<Category>, isNew: Boolean) {
         return dataSource.saveCategories(categories, isNew)
     }
 
@@ -60,7 +60,7 @@ class NoteRepoImpl @Inject constructor(
         dataSource.deleteNotes(notes)
     }
 
-    override fun deleteCategory(category: NoteCategory) {
+    override fun deleteCategory(category: Category) {
         dataSource.deleteCategory(category)
     }
 
@@ -73,7 +73,7 @@ class NoteRepoImpl @Inject constructor(
         dataSource.saveNotes(source, true)
     }
 
-    override fun mirrorCategories(source: List<NoteCategory>) {
+    override fun mirrorCategories(source: List<Category>) {
         dataSource.deleteAllCategories()
         dataSource.saveCategories(source, true)
     }

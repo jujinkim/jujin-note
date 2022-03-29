@@ -4,7 +4,7 @@ import com.jujinkim.note.data.AppDatabase
 import com.jujinkim.note.data.entity.toEntity
 import com.jujinkim.note.data.entity.toModel
 import com.jujinkim.note.model.Note
-import com.jujinkim.note.model.NoteCategory
+import com.jujinkim.note.model.Category
 import javax.inject.Inject
 
 class DatabaseNoteDataSource @Inject constructor(): NoteDataSource {
@@ -36,7 +36,7 @@ class DatabaseNoteDataSource @Inject constructor(): NoteDataSource {
         }
     }
 
-    override fun saveCategory(category: NoteCategory, isNew: Boolean) {
+    override fun saveCategory(category: Category, isNew: Boolean) {
         if (isNew) {
             db.categoryDao().insert(category.toEntity())
         } else {
@@ -44,7 +44,7 @@ class DatabaseNoteDataSource @Inject constructor(): NoteDataSource {
         }
     }
 
-    override fun saveCategories(categories: List<NoteCategory>, isNew: Boolean) {
+    override fun saveCategories(categories: List<Category>, isNew: Boolean) {
         if (isNew) {
             db.categoryDao().insertAll(*categories.map { it.toEntity() }.toTypedArray())
         } else {
@@ -64,7 +64,7 @@ class DatabaseNoteDataSource @Inject constructor(): NoteDataSource {
         db.noteDao().deleteAll(*notes.map { it.toEntity() }.toTypedArray())
     }
 
-    override fun deleteCategory(category: NoteCategory) {
+    override fun deleteCategory(category: Category) {
         db.categoryDao().delete(category.toEntity())
     }
 

@@ -5,7 +5,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import com.jujinkim.note.core.AppState
-import com.jujinkim.note.model.NoteCategory
+import com.jujinkim.note.model.Category
 import dagger.hilt.android.lifecycle.HiltViewModel
 import org.reduxkotlin.Store
 import javax.inject.Inject
@@ -14,7 +14,7 @@ import javax.inject.Inject
 class CategoryListViewModel @Inject constructor(
     private val store: Store<AppState>
 ) : ViewModel() {
-    var categories by mutableStateOf<List<NoteCategory>>(listOf())
+    var categories by mutableStateOf<List<Category>>(listOf())
 
     private val unsubscribe = store.subscribe {
         categories = store.state.categories

@@ -3,8 +3,7 @@ package com.jujinkim.note.core.reducer
 import com.jujinkim.note.core.AppState
 import com.jujinkim.note.data.repo.NoteRepo
 import com.jujinkim.note.model.Note
-import com.jujinkim.note.model.NoteCategory
-import javax.inject.Inject
+import com.jujinkim.note.model.Category
 
 object NoteReducers {
     fun addNote(state: AppState, note: Note) = state.copy().apply {
@@ -21,12 +20,12 @@ object NoteReducers {
         }
     }
 
-    fun addCategory(state: AppState, category: NoteCategory) = state.copy().apply {
+    fun addCategory(state: AppState, category: Category) = state.copy().apply {
         notes[category.id] = mutableListOf()
         categories.add(category)
     }
 
-    fun removeCategory(state: AppState, category: NoteCategory) = state.copy().apply {
+    fun removeCategory(state: AppState, category: Category) = state.copy().apply {
         notes.remove(category.id)
         categories.remove(category)
     }
@@ -35,7 +34,7 @@ object NoteReducers {
         categories = noteRepo.getCategories().toMutableList()
     )
 
-    fun loadNotes(state: AppState, category: NoteCategory, noteRepo: NoteRepo) = state.copy().apply {
+    fun loadNotes(state: AppState, category: Category, noteRepo: NoteRepo) = state.copy().apply {
         notes[category.id] = noteRepo.getNotes(category.id).toMutableList()
     }
 
