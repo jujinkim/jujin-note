@@ -9,7 +9,7 @@ import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import com.jujinkim.note.ui.LocalState
+import androidx.hilt.navigation.compose.hiltViewModel
 
 @Composable
 fun NoteCategoryListContent() {
@@ -31,8 +31,8 @@ fun NoteCategoryListTopBar() {
 }
 
 @Composable
-fun NoteCategoryList() {
-    val categories = LocalState.current.categories
+fun NoteCategoryList(viewModel: CategoryListViewModel = hiltViewModel()) {
+    val categories = viewModel.categories
     LazyColumn {
         items(categories) {
             CategoryListItem(category = it)
