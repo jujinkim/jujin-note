@@ -12,5 +12,12 @@ data class AppState (
     val notes: HashMap<CategoryId, Notes> = hashMapOf(),
 
     // view state
-    val focusedCategoryId: CategoryId = ""
+    val focusedCategoryId: CategoryId = "",
+    val currentScreen: AppScreen = AppScreen.CATEGORY_LIST
 )
+
+enum class AppScreen {
+    CATEGORY_LIST,
+    NOTE_LIST,
+    SETTING
+}
