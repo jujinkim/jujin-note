@@ -39,9 +39,21 @@ object NoteReducers {
         notes[category.id] = noteRepo.getNotes(category.id).toMutableList()
     }
 
-    fun checkNoteHasExpired(state: AppState, note: Note) = state.copy().apply {
-        if (note.expiredTime > System.currentTimeMillis()) {
+    fun checkNoteHasExpired(state: AppState, note: Note, noteRepo: NoteRepo) = state.copy().apply {
+        if (note.isExpired()) {
             notes[note.categoryId]?.remove(note)
         }
+    }.also {
+        noteRepo.deleteNote(note.id)
+    }
+
+    fun checkAllNoteExpiredAndUpdate(state: AppState, noteRepo: NoteRepo) = state.copy().apply {
+        val removedList = mutableListOf<Note>()
+        notes.forEach {
+            it.value.removeAll {
+                    note -> if (note.isExpired()) { removedList.add(note); true } else { false }
+            }
+        }
+        noteRepo.deleteNotes(removedList)
     }
 }

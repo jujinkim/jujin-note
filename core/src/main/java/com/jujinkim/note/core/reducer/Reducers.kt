@@ -25,6 +25,7 @@ class AppReducer @Inject constructor(
             is RemoveCategory -> NoteReducers.removeCategory(state, action.category)
             is LoadCategories -> NoteReducers.loadCategory(state, noteRepo)
             is LoadNotes -> NoteReducers.loadNotes(state, action.category, noteRepo)
-            is CheckNoteHasExpired -> NoteReducers.checkNoteHasExpired(state, action.note)
+            is CheckNoteHasExpiredAndUpdate -> NoteReducers.checkNoteHasExpired(state, action.note, noteRepo)
+            is CheckAllNoteExpiredAndUpdate -> NoteReducers.checkAllNoteExpiredAndUpdate(state, noteRepo)
         }
 }
