@@ -2,11 +2,7 @@ package com.jujinkim.note.data.di.module
 
 import android.content.Context
 import androidx.room.Room
-import androidx.room.RoomDatabase
 import com.jujinkim.note.data.AppDatabase
-import com.jujinkim.note.data.repo.NoteRepo
-import com.jujinkim.note.data.repo.NoteRepoImpl
-import dagger.Binds
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -19,11 +15,10 @@ import javax.inject.Singleton
 object DatabaseModule {
     @Provides
     @Singleton
-    fun provideDatabase(@ApplicationContext context: Context): RoomDatabase {
-        return Room.databaseBuilder(
-            context,
-            AppDatabase::class.java,
-            AppDatabase.DB_NAME
-        ).build()
-    }
+    fun provideAppDatabase(@ApplicationContext context: Context) = Room.databaseBuilder(
+        context,
+        AppDatabase::class.java,
+        AppDatabase.DB_NAME
+    ).build()
+
 }
