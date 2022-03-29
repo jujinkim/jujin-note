@@ -1,6 +1,8 @@
 package com.jujinkim.note.ui.notelist
 
-import androidx.lifecycle.MutableLiveData
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import com.jujinkim.note.core.AppState
 import com.jujinkim.note.model.Note
@@ -12,10 +14,12 @@ import javax.inject.Inject
 class NoteListViewModel @Inject constructor(
     private val store: Store<AppState>
 ) : ViewModel() {
-    val categoryId = MutableLiveData("")
+    var categoryId by mutableStateOf("")
+    val notes: List<Note>
+    get() = store.state.notes[categoryId]?.toList() ?: listOf()
 
     private val unsubscribe = store.subscribe {
-        categoryId.value = store.state.focusedCategoryId
+        categoryId = store.state.focusedCategoryId
     }
 
     override fun onCleared() {
