@@ -9,18 +9,18 @@ import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import com.jujinkim.note.model.NoteCategory
+import com.jujinkim.note.ui.LocalState
 
 @Composable
-fun NoteCategoryFragmentContent(categories: List<NoteCategory>) {
+fun NoteCategoryListContent() {
     Scaffold(
-        topBar = { NoteCategoryFragmentTopBar() },
-        content = { NoteCategoryFragmentList(categories) }
+        topBar = { NoteCategoryListTopBar() },
+        content = { NoteCategoryList() }
     )
 }
 
 @Composable
-fun NoteCategoryFragmentTopBar() {
+fun NoteCategoryListTopBar() {
     Row {
         Text(
             text = "JujinNote",
@@ -31,7 +31,8 @@ fun NoteCategoryFragmentTopBar() {
 }
 
 @Composable
-fun NoteCategoryFragmentList(categories: List<NoteCategory>) {
+fun NoteCategoryList() {
+    val categories = LocalState.current.categories
     LazyColumn {
         items(categories) {
             CategoryListItem(category = it)
