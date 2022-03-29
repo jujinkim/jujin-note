@@ -48,5 +48,35 @@ class NoteRepoImpl @Inject constructor(
         return dataSource.saveCategories(categories, isNew)
     }
 
+    override fun deleteNote(note: Note) {
+        dataSource.deleteNote(note)
+    }
+
+    override fun deleteNote(id: String) {
+        dataSource.deleteNote(id)
+    }
+
+    override fun deleteNotes(notes: List<Note>) {
+        dataSource.deleteNotes(notes)
+    }
+
+    override fun deleteCategory(category: NoteCategory) {
+        dataSource.deleteCategory(category)
+    }
+
+    override fun deleteCategory(catId: String) {
+        dataSource.deleteCategory(catId)
+    }
+
+    override fun mirrorNotes(source: List<Note>) {
+        dataSource.deleteAllNotes()
+        dataSource.saveNotes(source, true)
+    }
+
+    override fun mirrorCategories(source: List<NoteCategory>) {
+        dataSource.deleteAllCategories()
+        dataSource.saveCategories(source, true)
+    }
+
     override fun getCurrentDataSource() = dataSource
 }
