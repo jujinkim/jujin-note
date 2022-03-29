@@ -20,6 +20,9 @@ interface NoteDao {
     @Delete
     fun deleteAll(vararg noteEntities: NoteEntity)
 
+    @Query("DELETE FROM note")
+    fun clearTable()
+
     @Update
     fun update(noteEntity: NoteEntity)
 

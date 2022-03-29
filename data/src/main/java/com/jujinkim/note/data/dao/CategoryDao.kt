@@ -20,6 +20,9 @@ interface CategoryDao {
     @Delete
     fun deleteAll(vararg categoryEntity: CategoryEntity)
 
+    @Query("DELETE FROM category")
+    fun clearTable()
+
     @Update
     fun update(categoryEntity: CategoryEntity)
 
