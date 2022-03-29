@@ -71,4 +71,12 @@ class DatabaseNoteDataSource @Inject constructor(): NoteDataSource {
     override fun deleteCategory(catId: String) {
         db.categoryDao().delete(catId)
     }
+
+    override fun deleteAllNotes() {
+        db.noteDao().clearTable()
+    }
+
+    override fun deleteAllCategories() {
+        db.categoryDao().clearTable()
+    }
 }

@@ -20,4 +20,6 @@ interface NoteDataSource {
     fun deleteNotes(notes: List<Note>)
     fun deleteCategory(category: NoteCategory)
     fun deleteCategory(catId: String)
+    fun deleteAllNotes()
+    fun deleteAllCategories()
 }
