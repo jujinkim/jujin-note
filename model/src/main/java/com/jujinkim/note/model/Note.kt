@@ -6,4 +6,6 @@ data class Note(
     val content: String,
     val generatedTime: Long,
     val expiredTime: Long = -1
-)
+) {
+    fun isExpired() = expiredTime < System.currentTimeMillis()
+}
