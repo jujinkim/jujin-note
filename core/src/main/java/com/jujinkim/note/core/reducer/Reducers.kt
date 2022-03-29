@@ -18,11 +18,11 @@ class AppReducer @Inject constructor(
 
     private fun notesReducer(state: AppState, action: NoteAction) =
         when (action) {
-            is AddNote -> NoteReducers.addNote(state, action.note)
-            is RemoveNote -> NoteReducers.removeNote(state, action.note)
-            is RemoveNotes -> NoteReducers.removeNotes(state, action.notes)
-            is AddCategory -> NoteReducers.addCategory(state, action.category)
-            is RemoveCategory -> NoteReducers.removeCategory(state, action.category)
+            is AddNote -> NoteReducers.addNote(state, action.note, noteRepo)
+            is RemoveNote -> NoteReducers.removeNote(state, action.note, noteRepo)
+            is RemoveNotes -> NoteReducers.removeNotes(state, action.notes, noteRepo)
+            is AddCategory -> NoteReducers.addCategory(state, action.category, noteRepo)
+            is RemoveCategory -> NoteReducers.removeCategory(state, action.category, noteRepo)
             is LoadCategories -> NoteReducers.loadCategory(state, noteRepo)
             is LoadNotes -> NoteReducers.loadNotes(state, action.category, noteRepo)
             is CheckNoteHasExpiredAndUpdate -> NoteReducers.checkNoteHasExpired(state, action.note, noteRepo)

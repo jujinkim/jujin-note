@@ -6,28 +6,38 @@ import com.jujinkim.note.model.Note
 import com.jujinkim.note.model.Category
 
 object NoteReducers {
-    fun addNote(state: AppState, note: Note) = state.copy().apply {
+    fun addNote(state: AppState, note: Note, noteRepo: NoteRepo) = state.copy().apply {
         notes.getOrPut(note.categoryId) { mutableListOf() }.add(note)
+    }.also {
+        noteRepo.saveNote(note)
     }
 
-    fun removeNote(state: AppState, note: Note) = state.copy().apply {
+    fun removeNote(state: AppState, note: Note, noteRepo: NoteRepo) = state.copy().apply {
         notes[note.categoryId]?.remove(note)
+    }.also {
+        noteRepo.deleteNote(note)
     }
 
-    fun removeNotes(state: AppState, notes: List<Note>) = state.copy().apply {
+    fun removeNotes(state: AppState, notes: List<Note>, noteRepo: NoteRepo) = state.copy().apply {
         notes.forEach { note ->
             this.notes[note.categoryId]?.remove(note)
         }
+    }.also {
+        noteRepo.deleteNotes(notes)
     }
 
-    fun addCategory(state: AppState, category: Category) = state.copy().apply {
+    fun addCategory(state: AppState, category: Category, noteRepo: NoteRepo) = state.copy().apply {
         notes[category.id] = mutableListOf()
         categories.add(category)
+    }.also {
+        noteRepo.saveCategory(category)
     }
 
-    fun removeCategory(state: AppState, category: Category) = state.copy().apply {
+    fun removeCategory(state: AppState, category: Category, noteRepo: NoteRepo) = state.copy().apply {
         notes.remove(category.id)
         categories.remove(category)
+    }.also {
+        noteRepo.deleteCategory(category)
     }
 
     fun loadCategory(state: AppState, noteRepo: NoteRepo) = state.copy(
