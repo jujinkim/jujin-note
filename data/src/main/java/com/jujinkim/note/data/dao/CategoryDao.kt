@@ -14,6 +14,9 @@ interface CategoryDao {
     @Delete
     fun delete(categoryEntity: CategoryEntity)
 
+    @Query("DELETE FROM category WHERE id = :catId")
+    fun delete(catId: String)
+
     @Delete
     fun deleteAll(vararg categoryEntity: CategoryEntity)
 
