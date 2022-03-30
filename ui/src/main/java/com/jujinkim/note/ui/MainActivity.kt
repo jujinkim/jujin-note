@@ -14,11 +14,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.jujinkim.note.core.AppState
 import com.jujinkim.note.ui.ui.theme.JujinNoteTheme
 import dagger.hilt.android.AndroidEntryPoint
-import org.reduxkotlin.Store
-import javax.inject.Inject
 
 val localMainViewModel = compositionLocalOf<MainViewModel> {
     error("MainActivityViewModel not provided")
@@ -26,9 +23,6 @@ val localMainViewModel = compositionLocalOf<MainViewModel> {
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
-    @Inject
-    lateinit var store: Store<AppState>
-
     private val viewModel: MainViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
