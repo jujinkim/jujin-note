@@ -4,6 +4,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
+import com.jujinkim.note.core.AddCategory
 import com.jujinkim.note.core.AppState
 import com.jujinkim.note.model.Category
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -18,6 +19,12 @@ class CategoryListViewModel @Inject constructor(
 
     private val unsubscribe = store.subscribe {
         categories = store.state.categories
+    }
+
+    fun invokeAddCategory(name: String) {
+        if (name.isNotBlank()) {
+            store.dispatch(AddCategory(Category.new(name)))
+        }
     }
 
     override fun onCleared() {
