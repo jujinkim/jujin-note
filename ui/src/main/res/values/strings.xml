@@ -1,4 +1,19 @@
 <resources>
-    <string name="app_name">JujinNote</string>
-    <string name="title_activity_main">MainActivity</string>
+    <string name="app_name" translatable="false">JujinNote</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
+    <string name="okay">Okay</string>
+    <string name="cancel">Cancel</string>
+    <string name="close">Close</string>
+    <string name="add">Add</string>
+    <string name="remove">Remove</string>
+    <string name="add_category">Add category</string>
+    <string name="remove_category">Remove category</string>
+    <string name="add_note">Add note</string>
+    <string name="remove_note">Remove note</string>
+    <string name="change_expired_date">Change expired date</string>
+    <string name="expired_date_permanent">Permanent</string>
+    <string name="settings">Settings</string>
+    <string name="settings_default_expired_date">Default expired date</string>
+    <string name="settings_about">About</string>
 </resources>
