@@ -18,14 +18,23 @@ class AppReducer @Inject constructor(
 
     private fun notesReducer(state: AppState, action: NoteAction) =
         when (action) {
-            is AddNote -> NoteReducers.addNote(state, action.note, noteRepo)
-            is RemoveNote -> NoteReducers.removeNote(state, action.note, noteRepo)
-            is RemoveNotes -> NoteReducers.removeNotes(state, action.notes, noteRepo)
-            is AddCategory -> NoteReducers.addCategory(state, action.category, noteRepo)
-            is RemoveCategory -> NoteReducers.removeCategory(state, action.category, noteRepo)
-            is LoadCategories -> NoteReducers.loadCategory(state, noteRepo)
-            is LoadNotes -> NoteReducers.loadNotes(state, action.category, noteRepo)
-            is CheckNoteHasExpiredAndUpdate -> NoteReducers.checkNoteHasExpired(state, action.note, noteRepo)
-            is CheckAllNoteExpiredAndUpdate -> NoteReducers.checkAllNoteExpiredAndUpdate(state, noteRepo)
+            is NoteAction.AddNote ->
+                NoteReducers.addNote(state, action.note, noteRepo)
+            is NoteAction.RemoveNote ->
+                NoteReducers.removeNote(state, action.note, noteRepo)
+            is NoteAction.RemoveNotes ->
+                NoteReducers.removeNotes(state, action.notes, noteRepo)
+            is NoteAction.AddCategory ->
+                NoteReducers.addCategory(state, action.category, noteRepo)
+            is NoteAction.RemoveCategory ->
+                NoteReducers.removeCategory(state, action.category, noteRepo)
+            is NoteAction.LoadCategories ->
+                NoteReducers.loadCategory(state, noteRepo)
+            is NoteAction.LoadNotes ->
+                NoteReducers.loadNotes(state, action.category, noteRepo)
+            is NoteAction.CheckNoteHasExpiredAndUpdate ->
+                NoteReducers.checkNoteHasExpired(state, action.note, noteRepo)
+            is NoteAction.CheckAllNoteExpiredAndUpdate ->
+                NoteReducers.checkAllNoteExpiredAndUpdate(state, noteRepo)
         }
 }

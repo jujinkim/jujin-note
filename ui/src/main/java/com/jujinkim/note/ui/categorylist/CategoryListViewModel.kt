@@ -4,8 +4,8 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
-import com.jujinkim.note.core.AddCategory
 import com.jujinkim.note.core.AppState
+import com.jujinkim.note.core.NoteAction
 import com.jujinkim.note.model.Category
 import dagger.hilt.android.lifecycle.HiltViewModel
 import org.reduxkotlin.Store
@@ -23,7 +23,7 @@ class CategoryListViewModel @Inject constructor(
 
     fun invokeAddCategory(name: String) {
         if (name.isNotBlank()) {
-            store.dispatch(AddCategory(Category.new(name)))
+            store.dispatch(NoteAction.AddCategory(Category.new(name)))
         }
     }
 
