@@ -1,4 +1,4 @@
-package com.jujinkim.note.ui.ui.theme
+package com.jujinkim.note.ui.theme
 
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Shapes

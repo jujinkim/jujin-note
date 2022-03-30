@@ -1,4 +1,4 @@
-package com.jujinkim.note.ui.ui.theme
+package com.jujinkim.note.ui.theme
 
 import androidx.compose.material.Typography
 import androidx.compose.ui.text.TextStyle

@@ -1,4 +1,4 @@
-package com.jujinkim.note.ui.ui.theme
+package com.jujinkim.note.ui.theme
 
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material.MaterialTheme
