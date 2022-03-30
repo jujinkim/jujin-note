@@ -5,13 +5,13 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.jujinkim.note.core.AppScreen
-import com.jujinkim.note.ui.categorylist.NoteCategoryListContent
+import com.jujinkim.note.ui.categorylist.CategoryListContent
 import com.jujinkim.note.ui.notelist.NoteListContent
 
 @Composable
 fun MainActivityPhoneContent(viewModel: MainViewModel = hiltViewModel()) {
     when (viewModel.currentScreen) {
-        AppScreen.CATEGORY_LIST -> NoteCategoryListContent()
+        AppScreen.CATEGORY_LIST -> CategoryListContent()
         AppScreen.NOTE_LIST -> NoteListContent()
         AppScreen.SETTING -> TODO()
     }
@@ -20,7 +20,7 @@ fun MainActivityPhoneContent(viewModel: MainViewModel = hiltViewModel()) {
 @Composable
 fun MainActivityTabletContent(viewModel: MainViewModel = hiltViewModel()) {
     Row(verticalAlignment = Alignment.CenterVertically) {
-        NoteCategoryListContent()
+        CategoryListContent()
 
         when (viewModel.currentScreen) {
             AppScreen.CATEGORY_LIST, AppScreen.NOTE_LIST -> NoteListContent()

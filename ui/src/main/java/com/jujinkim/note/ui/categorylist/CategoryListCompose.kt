@@ -12,15 +12,15 @@ import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
 
 @Composable
-fun NoteCategoryListContent() {
+fun CategoryListContent() {
     Scaffold(
-        topBar = { NoteCategoryListTopBar() },
-        content = { NoteCategoryList() }
+        topBar = { CategoryListTopBar() },
+        content = { CategoryList() }
     )
 }
 
 @Composable
-fun NoteCategoryListTopBar() {
+fun CategoryListTopBar() {
     Row {
         Text(
             text = "JujinNote",
@@ -31,7 +31,7 @@ fun NoteCategoryListTopBar() {
 }
 
 @Composable
-fun NoteCategoryList(viewModel: CategoryListViewModel = hiltViewModel()) {
+fun CategoryList(viewModel: CategoryListViewModel = hiltViewModel()) {
     val categories = viewModel.categories
     LazyColumn {
         items(categories) {
