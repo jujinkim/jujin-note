@@ -4,18 +4,25 @@ import com.jujinkim.note.core.AppState
 import com.jujinkim.note.data.repo.NoteRepo
 import com.jujinkim.note.model.Note
 import com.jujinkim.note.model.Category
+import kotlinx.coroutines.*
 
 object NoteReducers {
+    private val noteReducerScope = CoroutineScope(Dispatchers.IO)
+
     fun addNote(state: AppState, note: Note, noteRepo: NoteRepo) = state.copy().apply {
         notes.getOrPut(note.categoryId) { mutableListOf() }.add(note)
     }.also {
-        noteRepo.saveNote(note)
+        noteReducerScope.launch {
+            noteRepo.saveNote(note)
+        }
     }
 
     fun removeNote(state: AppState, note: Note, noteRepo: NoteRepo) = state.copy().apply {
         notes[note.categoryId]?.remove(note)
     }.also {
-        noteRepo.deleteNote(note)
+        noteReducerScope.launch {
+            noteRepo.deleteNote(note)
+        }
     }
 
     fun removeNotes(state: AppState, notes: List<Note>, noteRepo: NoteRepo) = state.copy().apply {
@@ -23,29 +30,40 @@ object NoteReducers {
             this.notes[note.categoryId]?.remove(note)
         }
     }.also {
-        noteRepo.deleteNotes(notes)
+        noteReducerScope.launch {
+            noteRepo.deleteNotes(notes)
+        }
     }
 
     fun addCategory(state: AppState, category: Category, noteRepo: NoteRepo) = state.copy().apply {
         notes[category.id] = mutableListOf()
         categories.add(category)
     }.also {
-        noteRepo.saveCategory(category)
+        noteReducerScope.launch {
+            noteRepo.saveCategory(category)
+        }
     }
 
     fun removeCategory(state: AppState, category: Category, noteRepo: NoteRepo) = state.copy().apply {
         notes.remove(category.id)
         categories.remove(category)
     }.also {
-        noteRepo.deleteCategory(category)
+        noteReducerScope.launch {
+            noteRepo.deleteCategory(category)
+        }
     }
 
-    fun loadCategory(state: AppState, noteRepo: NoteRepo) = state.copy(
-        categories = noteRepo.getCategories().toMutableList()
-    )
+    fun loadCategory(state: AppState, noteRepo: NoteRepo) = state.copy().apply {
+        noteReducerScope.launch {
+            categories.clear()
+            categories.addAll(noteRepo.getCategories().toMutableList())
+        }
+    }
 
     fun loadNotes(state: AppState, category: Category, noteRepo: NoteRepo) = state.copy().apply {
-        notes[category.id] = noteRepo.getNotes(category.id).toMutableList()
+        noteReducerScope.launch {
+            notes[category.id] = noteRepo.getNotes(category.id).toMutableList()
+        }
     }
 
     fun checkNoteHasExpired(state: AppState, note: Note, noteRepo: NoteRepo) = state.copy().apply {
@@ -53,7 +71,9 @@ object NoteReducers {
             notes[note.categoryId]?.remove(note)
         }
     }.also {
-        noteRepo.deleteNote(note.id)
+        noteReducerScope.launch {
+            noteRepo.deleteNote(note.id)
+        }
     }
 
     fun checkAllNoteExpiredAndUpdate(state: AppState, noteRepo: NoteRepo) = state.copy().apply {
@@ -63,6 +83,8 @@ object NoteReducers {
                     note -> if (note.isExpired()) { removedList.add(note); true } else { false }
             }
         }
-        noteRepo.deleteNotes(removedList)
+        noteReducerScope.launch {
+            noteRepo.deleteNotes(removedList)
+        }
     }
 }
