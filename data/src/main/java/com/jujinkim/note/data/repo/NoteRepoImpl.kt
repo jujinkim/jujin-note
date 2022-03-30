@@ -3,6 +3,8 @@ package com.jujinkim.note.data.repo
 import com.jujinkim.note.data.repo.datasource.DatabaseNoteDataSource
 import com.jujinkim.note.model.Note
 import com.jujinkim.note.model.Category
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -12,68 +14,68 @@ class NoteRepoImpl @Inject constructor(
 ): NoteRepo {
     private var dataSource = databaseDataSource
 
-    override fun getNote(id: String): Note {
-        return dataSource.getNote(id)
+    override suspend fun getNote(id: String) = withContext(Dispatchers.IO) {
+        dataSource.getNote(id)
     }
 
-    override fun getNotes(catId: String): List<Note> {
-        return dataSource.getNotes(catId)
+    override suspend fun getNotes(catId: String) = withContext(Dispatchers.IO) {
+        dataSource.getNotes(catId)
     }
 
-    override fun getAllNotes(): List<Note> {
-        return dataSource.getAllNotes()
+    override suspend fun getAllNotes() = withContext(Dispatchers.IO) {
+        dataSource.getAllNotes()
     }
 
-    override fun getCategory(catId: String): Category {
-        return dataSource.getCategory(catId)
+    override suspend fun getCategory(catId: String) = withContext(Dispatchers.IO) {
+        dataSource.getCategory(catId)
     }
 
-    override fun getCategories(): List<Category> {
-        return dataSource.getCategories()
+    override suspend fun getCategories() = withContext(Dispatchers.IO) {
+        dataSource.getCategories()
     }
 
-    override fun saveNote(note: Note, isNew: Boolean) {
-        return dataSource.saveNote(note, isNew)
+    override suspend fun saveNote(note: Note, isNew: Boolean) = withContext(Dispatchers.IO) {
+        dataSource.saveNote(note, isNew)
     }
 
-    override fun saveNotes(notes: List<Note>, isNew: Boolean) {
-        return dataSource.saveNotes(notes, isNew)
+    override suspend fun saveNotes(notes: List<Note>, isNew: Boolean) = withContext(Dispatchers.IO) {
+        dataSource.saveNotes(notes, isNew)
     }
 
-    override fun saveCategory(category: Category, isNew: Boolean) {
-        return dataSource.saveCategory(category, isNew)
+    override suspend fun saveCategory(category: Category, isNew: Boolean) = withContext(Dispatchers.IO) {
+        dataSource.saveCategory(category, isNew)
     }
 
-    override fun saveCategories(categories: List<Category>, isNew: Boolean) {
-        return dataSource.saveCategories(categories, isNew)
+    override suspend fun saveCategories(categories: List<Category>, isNew: Boolean) = withContext(Dispatchers.IO) {
+        dataSource.saveCategories(categories, isNew)
     }
 
-    override fun deleteNote(note: Note) {
+    override suspend fun deleteNote(note: Note) = withContext(Dispatchers.IO) {
         dataSource.deleteNote(note)
     }
 
-    override fun deleteNote(id: String) {
+    override suspend fun deleteNote(id: String) = withContext(Dispatchers.IO) {
         dataSource.deleteNote(id)
     }
 
-    override fun deleteNotes(notes: List<Note>) {
+    override suspend fun deleteNotes(notes: List<Note>) = withContext(Dispatchers.IO) {
         dataSource.deleteNotes(notes)
     }
 
-    override fun deleteCategory(category: Category) {
+    override suspend fun deleteCategory(category: Category) = withContext(Dispatchers.IO) {
         dataSource.deleteCategory(category)
     }
 
-    override fun deleteCategory(catId: String) {
+    override suspend fun deleteCategory(catId: String) = withContext(Dispatchers.IO) {
         dataSource.deleteCategory(catId)
     }
 
-    override fun mirrorNotes(source: List<Note>) {
+    override suspend fun mirrorNotes(source: List<Note>) = withContext(Dispatchers.IO) {
         dataSource.deleteAllNotes()
         dataSource.saveNotes(source, true)
     }
 
-    override fun mirrorCategories(source: List<Category>) {
+    override suspend fun mirrorCategories(source: List<Category>) = withContext(Dispatchers.IO) {
         dataSource.deleteAllCategories()
         dataSource.saveCategories(source, true)
     }
