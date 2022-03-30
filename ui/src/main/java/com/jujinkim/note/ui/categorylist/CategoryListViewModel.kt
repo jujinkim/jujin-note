@@ -1,8 +1,10 @@
 package com.jujinkim.note.ui.categorylist
 
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.jujinkim.note.core.AppState
 import com.jujinkim.note.core.NoteAction
@@ -15,16 +17,24 @@ import javax.inject.Inject
 class CategoryListViewModel @Inject constructor(
     private val store: Store<AppState>
 ) : ViewModel() {
-    var categories by mutableStateOf<List<Category>>(listOf())
+    var categories by mutableStateOf(listOf<Category>())
 
     private val unsubscribe = store.subscribe {
-        categories = store.state.categories
+        categories = store.state.categories.toList()    // call toList() to create new list
+    }
+
+    fun invokeLoadCategories() {
+        store.dispatch(NoteAction.LoadCategories)
     }
 
     fun invokeAddCategory(name: String) {
         if (name.isNotBlank()) {
             store.dispatch(NoteAction.AddCategory(Category.new(name)))
         }
+    }
+
+    fun invokeRemoveCategories(category: Category) {
+        store.dispatch(NoteAction.RemoveCategory(category))
     }
 
     override fun onCleared() {
