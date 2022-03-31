@@ -3,6 +3,12 @@ package com.jujinkim.note.core
 import com.jujinkim.note.model.Note
 import com.jujinkim.note.model.Category
 
+sealed class UiAction {
+    object NavigateToCategories: UiAction()
+    data class NavigateToNotes(val catId: CategoryId): UiAction()
+    object NavigateToSettings: UiAction()
+}
+
 sealed class NoteAction {
     class AddNote(val note: Note): NoteAction()
     class RemoveNote(val note: Note): NoteAction()

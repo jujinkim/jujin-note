@@ -12,8 +12,19 @@ class AppReducer @Inject constructor(
     fun rootReducer(state: AppState, action: Any) =
         when (action) {
             is NoteAction -> notesReducer(state, action)
+            is UiAction -> uiReducer(state, action)
             is SettingAction -> state   // not implemented
             else -> state
+        }
+
+    private fun uiReducer(state: AppState, action: UiAction) =
+        when (action) {
+            is UiAction.NavigateToCategories ->
+                UiReducers.navigateToCategories(state)
+            is UiAction.NavigateToNotes ->
+                UiReducers.navigateToNotes(state, action.catId)
+            is UiAction.NavigateToSettings ->
+                UiReducers.navigateToSettings(state)
         }
 
     private fun notesReducer(state: AppState, action: NoteAction) =
