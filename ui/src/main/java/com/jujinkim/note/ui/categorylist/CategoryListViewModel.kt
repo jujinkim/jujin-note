@@ -4,10 +4,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
-import com.jujinkim.note.core.AppState
-import com.jujinkim.note.core.DatabaseThunks
-import com.jujinkim.note.core.NoteAction
-import com.jujinkim.note.core.NoteRepoLoadItemType
+import com.jujinkim.note.core.*
 import com.jujinkim.note.model.Category
 import dagger.hilt.android.lifecycle.HiltViewModel
 import org.reduxkotlin.Store
@@ -36,6 +33,10 @@ class CategoryListViewModel @Inject constructor(
 
     fun invokeRemoveCategories(category: Category) {
         store.dispatch(NoteAction.RemoveCategory(category))
+    }
+
+    fun invokeOpenNotes(category: Category) {
+        store.dispatch(UiAction.NavigateToNotes(category.id))
     }
 
     override fun onCleared() {

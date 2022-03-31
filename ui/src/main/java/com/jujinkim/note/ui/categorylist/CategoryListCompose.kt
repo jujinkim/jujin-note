@@ -44,7 +44,7 @@ fun CategoryList(
 ) {
     LazyColumn {
         items(viewModel.categories) {
-            CategoryListItem(category = it)
+            CategoryListItem(category = it, viewModel)
         }
     }
 }

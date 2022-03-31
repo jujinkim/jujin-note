@@ -5,6 +5,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import com.jujinkim.note.core.AppState
+import com.jujinkim.note.core.UiAction
 import com.jujinkim.note.model.Note
 import dagger.hilt.android.lifecycle.HiltViewModel
 import org.reduxkotlin.Store
@@ -20,6 +21,10 @@ class NoteListViewModel @Inject constructor(
 
     private val unsubscribe = store.subscribe {
         categoryId = store.state.focusedCategoryId
+    }
+
+    fun invokeBackToCategories() {
+        store.dispatch(UiAction.NavigateToCategories)
     }
 
     override fun onCleared() {
