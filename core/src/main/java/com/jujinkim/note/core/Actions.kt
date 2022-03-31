@@ -13,6 +13,10 @@ sealed class NoteAction {
     class LoadNotes(val category: Category): NoteAction()
     class CheckNoteHasExpiredAndUpdate(val note: Note): NoteAction()
     object CheckAllNoteExpiredAndUpdate: NoteAction()
+
+    object GetFromDbStart: NoteAction()
+    data class GetFromDbSuccess(val data: Any?, val type: NoteRepoLoadItemType): NoteAction()
+    data class GetFromDbFailed(val msg: String): NoteAction()
 }
 
 sealed class SettingAction {

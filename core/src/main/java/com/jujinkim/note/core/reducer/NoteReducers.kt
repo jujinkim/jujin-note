@@ -1,6 +1,8 @@
 package com.jujinkim.note.core.reducer
 
 import com.jujinkim.note.core.AppState
+import com.jujinkim.note.core.NoteRepoLoadItemType
+import com.jujinkim.note.core.Notes
 import com.jujinkim.note.data.repo.NoteRepo
 import com.jujinkim.note.model.Note
 import com.jujinkim.note.model.Category
@@ -87,4 +89,25 @@ object NoteReducers {
             noteRepo.deleteNotes(removedList)
         }
     }
+
+    fun getFromDbStart(state: AppState) = state.copy()
+
+    @Suppress("UNCHECKED_CAST")
+    fun getFromDbSuccess(state: AppState, data: Any?, type: NoteRepoLoadItemType) = state.copy().apply {
+        when(type) {
+            NoteRepoLoadItemType.NOTES -> {
+                val curNotes = data as Notes
+                if (curNotes.isNotEmpty()) {
+                    val catId = curNotes[0].categoryId
+                    notes[catId] = curNotes
+                }
+            }
+            NoteRepoLoadItemType.CATEGORIES -> {
+                categories.clear()
+                categories.addAll(data as MutableList<Category>)
+            }
+        }
+    }
+
+    fun getFromDbFailed(state: AppState, msg: String) = state.copy()
 }

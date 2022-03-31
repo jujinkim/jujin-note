@@ -36,5 +36,11 @@ class AppReducer @Inject constructor(
                 NoteReducers.checkNoteHasExpired(state, action.note, noteRepo)
             is NoteAction.CheckAllNoteExpiredAndUpdate ->
                 NoteReducers.checkAllNoteExpiredAndUpdate(state, noteRepo)
+            is NoteAction.GetFromDbStart ->
+                NoteReducers.getFromDbStart(state)
+            is NoteAction.GetFromDbSuccess ->
+                NoteReducers.getFromDbSuccess(state, action.data, action.type)
+            is NoteAction.GetFromDbFailed ->
+                NoteReducers.getFromDbFailed(state, action.msg)
         }
 }
