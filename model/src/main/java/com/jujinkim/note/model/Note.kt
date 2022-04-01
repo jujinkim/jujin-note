@@ -1,5 +1,8 @@
 package com.jujinkim.note.model
 
+import java.math.BigInteger
+import java.security.MessageDigest
+
 data class Note(
     val id: String,
     val categoryId: String,
@@ -8,4 +11,13 @@ data class Note(
     val expiredTime: Long = -1
 ) {
     fun isExpired() = expiredTime < System.currentTimeMillis()
+
+    companion object {
+        fun new(catId: String, content: String, icon: Int = 0, expiredTime: Long = -1) : Note {
+            val md5 = MessageDigest.getInstance("MD5")
+            val idInput = catId + content + System.currentTimeMillis()
+            val id = BigInteger(1, md5.digest(idInput.toByteArray())).toString(16).padStart(32, '0')
+            return Note(id, catId, content, System.currentTimeMillis(), expiredTime)
+        }
+    }
 }
