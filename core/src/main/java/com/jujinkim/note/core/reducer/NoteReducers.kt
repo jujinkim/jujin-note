@@ -83,10 +83,9 @@ object NoteReducers {
     fun getFromDbSuccess(state: AppState, data: Any?, type: NoteRepoLoadItemType) = state.copy().apply {
         when(type) {
             NoteRepoLoadItemType.NOTES -> {
-                val curNotes = data as Notes
-                if (curNotes.isNotEmpty()) {
-                    val catId = curNotes[0].categoryId
-                    notes[catId] = curNotes
+                (data as Notes).forEach { note ->
+                    val catId = note.categoryId
+                    notes.getOrPut(catId) { mutableListOf() }.add(note)
                 }
             }
             NoteRepoLoadItemType.CATEGORIES -> {
