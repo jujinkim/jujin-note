@@ -23,11 +23,6 @@ class MainViewModel @Inject constructor(
         currentScreen = store.state.currentScreen
     }
 
-    fun initApp() {
-        store.dispatch(dbThunks.getItems(NoteRepoLoadItemType.CATEGORIES))
-        store.dispatch(dbThunks.getItems(NoteRepoLoadItemType.NOTES))
-    }
-
     override fun onCleared() {
         unsubscribe()
         super.onCleared()

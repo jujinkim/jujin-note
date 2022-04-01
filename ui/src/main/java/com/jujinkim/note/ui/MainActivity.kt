@@ -41,8 +41,6 @@ class MainActivity : ComponentActivity() {
                 }
             }
         }
-
-        viewModel.initApp()
     }
 }
 
