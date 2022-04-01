@@ -55,19 +55,6 @@ object NoteReducers {
         }
     }
 
-    fun loadCategory(state: AppState, noteRepo: NoteRepo) = state.copy().apply {
-        noteReducerScope.launch {
-            categories.clear()
-            categories.addAll(noteRepo.getCategories().toMutableList())
-        }
-    }
-
-    fun loadNotes(state: AppState, category: Category, noteRepo: NoteRepo) = state.copy().apply {
-        noteReducerScope.launch {
-            notes[category.id] = noteRepo.getNotes(category.id).toMutableList()
-        }
-    }
-
     fun checkNoteHasExpired(state: AppState, note: Note, noteRepo: NoteRepo) = state.copy().apply {
         if (note.isExpired()) {
             notes[note.categoryId]?.remove(note)

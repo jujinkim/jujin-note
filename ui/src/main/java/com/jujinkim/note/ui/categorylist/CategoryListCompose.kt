@@ -23,8 +23,6 @@ fun CategoryListContent(
         content = { CategoryList() },
         floatingActionButton = { CategoryAddButton() }
     )
-
-    viewModel.invokeLoadCategories()
 }
 
 @Composable

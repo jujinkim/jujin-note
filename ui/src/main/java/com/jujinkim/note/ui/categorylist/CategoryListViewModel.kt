@@ -21,10 +21,6 @@ class CategoryListViewModel @Inject constructor(
         categories = store.state.categories.toList()    // call toList() to create new list
     }
 
-    fun invokeLoadCategories() {
-        store.dispatch(dbThunk.getItems(NoteRepoLoadItemType.CATEGORIES))
-    }
-
     fun invokeAddCategory(name: String) {
         if (name.isNotBlank()) {
             store.dispatch(NoteAction.AddCategory(Category.new(name)))
