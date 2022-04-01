@@ -33,15 +33,13 @@ fun NoteListContent(viewModel: NoteListViewModel = hiltViewModel()) {
         }
     }
 
-    val notes = viewModel.notes
-
     Scaffold {
         Column {
             LazyColumn(
                 modifier = Modifier.weight(1f),
                 verticalArrangement = Arrangement.Bottom
             ) {
-                items(notes) {
+                items(viewModel.notes) {
                     NoteItemCompose(note = it)
                 }
             }
