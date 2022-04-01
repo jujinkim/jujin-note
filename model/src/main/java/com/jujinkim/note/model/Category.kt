@@ -15,5 +15,9 @@ data class Category(
             val id = BigInteger(1, md5.digest(idInput.toByteArray())).toString(16).padStart(32, '0')
             return Category(id, title, icon)
         }
+
+        fun defaultCategory() : Category {
+            return Category("", "Default", 0)
+        }
     }
 }

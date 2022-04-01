@@ -41,6 +41,7 @@ fun CategoryList(
     viewModel: CategoryListViewModel = hiltViewModel()
 ) {
     LazyColumn {
+        item { CategoryListItem(category = Category.defaultCategory(), viewModel = viewModel) }
         items(viewModel.categories) {
             CategoryListItem(category = it, viewModel)
         }
