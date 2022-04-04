@@ -5,7 +5,7 @@ import com.jujinkim.note.model.Category
 
 sealed class UiAction {
     object NavigateToCategories: UiAction()
-    data class NavigateToNotes(val catId: CategoryId): UiAction()
+    data class NavigateToNotes(val cat: Category): UiAction()
     object NavigateToSettings: UiAction()
 }
 

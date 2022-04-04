@@ -13,6 +13,7 @@ import androidx.compose.material.TextField
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
@@ -33,7 +34,9 @@ fun NoteListContent(viewModel: NoteListViewModel = hiltViewModel()) {
         }
     }
 
-    Scaffold {
+    Scaffold (
+        topBar = { NoteListTopBar() }
+    ) {
         Column {
             LazyColumn(
                 modifier = Modifier.weight(1f),
@@ -45,6 +48,20 @@ fun NoteListContent(viewModel: NoteListViewModel = hiltViewModel()) {
             }
             NoteInput { viewModel.invokeAddNote(it) }
         }
+    }
+
+}
+
+@Composable
+fun NoteListTopBar(viewModel: NoteListViewModel = hiltViewModel()) {
+    val isWideScreen = isWideScreen()
+    Row(verticalAlignment = Alignment.CenterVertically) {
+        if (!isWideScreen) {
+            Button(onClick = { viewModel.invokeBackToCategories() }) {
+                Text(text = "<")
+            }
+        }
+        Text(text = viewModel.categoryName)
     }
 
 }

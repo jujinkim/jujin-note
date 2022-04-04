@@ -32,7 +32,7 @@ class CategoryListViewModel @Inject constructor(
     }
 
     fun invokeOpenNotes(category: Category) {
-        store.dispatch(UiAction.NavigateToNotes(category.id))
+        store.dispatch(UiAction.NavigateToNotes(category))
     }
 
     override fun onCleared() {

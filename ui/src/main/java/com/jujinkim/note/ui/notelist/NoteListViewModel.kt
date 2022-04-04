@@ -16,11 +16,13 @@ import javax.inject.Inject
 class NoteListViewModel @Inject constructor(
     private val store: Store<AppState>
 ) : ViewModel() {
-    var categoryId by mutableStateOf("")
-    var notes by mutableStateOf(listOf<Note>())
+    var categoryId by mutableStateOf(store.state.categoryId)
+    var categoryName by mutableStateOf(store.state.categoryTitle)
+    var notes by mutableStateOf(store.state.notes[categoryId]?.toList() ?: listOf())
 
     private val unsubscribe = store.subscribe {
-        categoryId = store.state.focusedCategoryId
+        categoryId = store.state.categoryId
+        categoryName = store.state.categoryTitle
         notes = store.state.notes[categoryId]?.toList() ?: listOf()
     }
 

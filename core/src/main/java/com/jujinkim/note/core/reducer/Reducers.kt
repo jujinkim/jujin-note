@@ -22,7 +22,7 @@ class AppReducer @Inject constructor(
             is UiAction.NavigateToCategories ->
                 UiReducers.navigateToCategories(state)
             is UiAction.NavigateToNotes ->
-                UiReducers.navigateToNotes(state, action.catId)
+                UiReducers.navigateToNotes(state, action.cat)
             is UiAction.NavigateToSettings ->
                 UiReducers.navigateToSettings(state)
         }
