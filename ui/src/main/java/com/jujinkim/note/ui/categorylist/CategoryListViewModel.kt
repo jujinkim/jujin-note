@@ -13,7 +13,6 @@ import javax.inject.Inject
 @HiltViewModel
 class CategoryListViewModel @Inject constructor(
     private val store: Store<AppState>,
-    private val dbThunk: DatabaseThunks
 ) : ViewModel() {
     var categories by mutableStateOf(listOf<Category>())
     var isEditMode by mutableStateOf(false)
