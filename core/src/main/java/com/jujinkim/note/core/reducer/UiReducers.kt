@@ -17,4 +17,8 @@ object UiReducers {
     fun navigateToSettings(state: AppState) = state.copy(
         currentScreen = AppScreen.SETTING
     )
+
+    fun toggleCategoryEditMode(state: AppState) = state.copy(
+        isCategoryEditMode = !state.isCategoryEditMode
+    )
 }

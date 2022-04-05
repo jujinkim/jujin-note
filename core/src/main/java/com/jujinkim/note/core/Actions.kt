@@ -7,6 +7,7 @@ sealed class UiAction {
     object NavigateToCategories: UiAction()
     data class NavigateToNotes(val cat: Category): UiAction()
     object NavigateToSettings: UiAction()
+    object ToggleCategoryEditMode: UiAction()
 }
 
 sealed class NoteAction {
@@ -14,6 +15,7 @@ sealed class NoteAction {
     class RemoveNote(val note: Note): NoteAction()
     class RemoveNotes(val notes: List<Note>): NoteAction()
     class AddCategory(val category: Category): NoteAction()
+    class UpdateCategory(val category: Category): NoteAction()
     class RemoveCategory(val category: Category): NoteAction()
     class CheckNoteHasExpiredAndUpdate(val note: Note): NoteAction()
     object CheckAllNoteExpiredAndUpdate: NoteAction()

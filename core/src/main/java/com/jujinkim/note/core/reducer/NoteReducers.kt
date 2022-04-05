@@ -46,6 +46,14 @@ object NoteReducers {
         }
     }
 
+    fun updateCategory(state: AppState, category: Category, noteRepo: NoteRepo) = state.copy().apply {
+        categories[categories.indexOfFirst { it.id == category.id }] = category
+    }.also {
+        noteReducerScope.launch {
+            noteRepo.saveCategory(category, false)
+        }
+    }
+
     fun removeCategory(state: AppState, category: Category, noteRepo: NoteRepo) = state.copy().apply {
         notes.remove(category.id)
         categories.remove(category)

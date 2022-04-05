@@ -11,6 +11,9 @@ data class AppState (
     val categories: MutableList<Category> = mutableListOf(),
     val notes: HashMap<CategoryId, Notes> = hashMapOf(),
 
+    // category list
+    val isCategoryEditMode: Boolean = false,
+
     // view state
     val focusedCategory: Category = Category.new(""),
     val currentScreen: AppScreen = AppScreen.CATEGORY_LIST

@@ -25,6 +25,8 @@ class AppReducer @Inject constructor(
                 UiReducers.navigateToNotes(state, action.cat)
             is UiAction.NavigateToSettings ->
                 UiReducers.navigateToSettings(state)
+            is UiAction.ToggleCategoryEditMode ->
+                UiReducers.toggleCategoryEditMode(state)
         }
 
     private fun notesReducer(state: AppState, action: NoteAction) =
@@ -37,6 +39,8 @@ class AppReducer @Inject constructor(
                 NoteReducers.removeNotes(state, action.notes, noteRepo)
             is NoteAction.AddCategory ->
                 NoteReducers.addCategory(state, action.category, noteRepo)
+            is NoteAction.UpdateCategory ->
+                NoteReducers.updateCategory(state, action.category, noteRepo)
             is NoteAction.RemoveCategory ->
                 NoteReducers.removeCategory(state, action.category, noteRepo)
             is NoteAction.CheckNoteHasExpiredAndUpdate ->

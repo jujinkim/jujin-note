@@ -16,14 +16,22 @@ class CategoryListViewModel @Inject constructor(
     private val dbThunk: DatabaseThunks
 ) : ViewModel() {
     var categories by mutableStateOf(listOf<Category>())
+    var isEditMode by mutableStateOf(false)
 
     private val unsubscribe = store.subscribe {
         categories = store.state.categories.toList()    // call toList() to create new list
+        isEditMode = store.state.isCategoryEditMode
     }
 
     fun invokeAddCategory(name: String) {
         if (name.isNotBlank()) {
             store.dispatch(NoteAction.AddCategory(Category.new(name)))
+        }
+    }
+
+    fun invokeEditCategory(category: Category, name: String) {
+        if (name.isNotBlank()) {
+            store.dispatch(NoteAction.UpdateCategory(category.copy(title = name)))
         }
     }
 
@@ -33,6 +41,10 @@ class CategoryListViewModel @Inject constructor(
 
     fun invokeOpenNotes(category: Category) {
         store.dispatch(UiAction.NavigateToNotes(category))
+    }
+
+    fun invokeToggleCategoryEditMode() {
+        store.dispatch(UiAction.ToggleCategoryEditMode)
     }
 
     override fun onCleared() {
