@@ -1,17 +1,16 @@
 package com.jujinkim.note.ui.categorylist
 
+import androidx.compose.animation.*
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Button
-import androidx.compose.material.IconButton
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -27,6 +26,7 @@ fun CategoryListItemPreview() {
     )
 }
 
+@OptIn(ExperimentalAnimationApi::class)
 @Composable
 fun CategoryListItem(
     category: Category,
@@ -34,14 +34,14 @@ fun CategoryListItem(
     onRemoveCategoryClick: (category: Category) -> Unit
 ) {
     val viewModel: CategoryListViewModel = hiltViewModel()
-    val isEditMode = viewModel.isEditMode
+    val isEditVisible = viewModel.isEditMode && category.id.isNotEmpty()
     Row(
         modifier = Modifier
             .padding(16.dp)
             .clickable { viewModel.invokeOpenNotes(category) }
     ) {
         // drag to reorder
-        if (isEditMode && category.id.isNotEmpty()) {
+        AnimatedVisibility(visible = isEditVisible, enter = expandHorizontally(), exit = shrinkHorizontally()) {
             //Image(        )
         }
 
@@ -51,17 +51,18 @@ fun CategoryListItem(
                 .weight(1f)
                 .align(Alignment.CenterVertically)
         ) {
-            Text(text = category.title)
-            Text(text = category.id)
+            Text(text = category.title, maxLines = 1, overflow = TextOverflow.Ellipsis)
+            Text(text = category.id, maxLines = 1, overflow = TextOverflow.Ellipsis)
         }
 
-        if (isEditMode && category.id.isNotEmpty()) {
+        AnimatedVisibility(visible = isEditVisible, enter = scaleIn(), exit = scaleOut()) {
             // edit name
             Button(onClick = { onEditCategoryClick(category) }) {
                 Text("edit")
             }
-
-            // remove category
+        }
+        AnimatedVisibility(visible = isEditVisible, enter = scaleIn(), exit = scaleOut()) {
+        // remove category
             Button(onClick = { onRemoveCategoryClick(category) }) {
                 Text("delete")
             }
