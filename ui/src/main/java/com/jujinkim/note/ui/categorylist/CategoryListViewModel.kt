@@ -36,7 +36,8 @@ class CategoryListViewModel @Inject constructor(
     }
 
     fun invokeRemoveCategories(category: Category) {
-        store.dispatch(NoteAction.RemoveCategory(category))
+        val relatedNotes = store.state.notes[category.id] ?: listOf()
+        store.dispatch(NoteAction.RemoveCategory(category, relatedNotes))
     }
 
     fun invokeOpenNotes(category: Category) {

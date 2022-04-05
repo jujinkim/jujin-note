@@ -16,7 +16,7 @@ sealed class NoteAction {
     class RemoveNotes(val notes: List<Note>): NoteAction()
     class AddCategory(val category: Category): NoteAction()
     class UpdateCategory(val category: Category): NoteAction()
-    class RemoveCategory(val category: Category): NoteAction()
+    class RemoveCategory(val category: Category, val relatedNotes: List<Note>): NoteAction()
     class CheckNoteHasExpiredAndUpdate(val note: Note): NoteAction()
     object CheckAllNoteExpiredAndUpdate: NoteAction()
 

@@ -28,7 +28,7 @@ object NoteReducers {
     }
 
     fun removeNotes(state: AppState, notes: List<Note>, noteRepo: NoteRepo) = state.copy().apply {
-        notes.forEach { note ->
+        notes.toList().forEach { note ->
             this.notes[note.categoryId]?.remove(note)
         }
     }.also {
