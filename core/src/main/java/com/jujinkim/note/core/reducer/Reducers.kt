@@ -47,8 +47,8 @@ class AppReducer @Inject constructor(
             }
             is NoteAction.CheckNoteHasExpiredAndUpdate ->
                 NoteReducers.checkNoteHasExpired(state, action.note, noteRepo)
-            is NoteAction.CheckAllNoteExpiredAndUpdate ->
-                NoteReducers.checkAllNoteExpiredAndUpdate(state, noteRepo)
+            is NoteAction.CheckAllNoteInvalidAndUpdate ->
+                NoteReducers.checkAllNoteInvalidAndUpdate(state, noteRepo)
             is NoteAction.GetFromDbStart ->
                 NoteReducers.getFromDbStart(state)
             is NoteAction.GetFromDbSuccess ->

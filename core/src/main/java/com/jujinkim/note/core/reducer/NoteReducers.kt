@@ -73,13 +73,21 @@ object NoteReducers {
         }
     }
 
-    fun checkAllNoteExpiredAndUpdate(state: AppState, noteRepo: NoteRepo) = state.copy().apply {
+    fun checkAllNoteInvalidAndUpdate(state: AppState, noteRepo: NoteRepo) = state.copy().apply {
         val removedList = mutableListOf<Note>()
+
         notes.forEach {
+            // expired
             it.value.removeAll {
-                    note -> if (note.isExpired()) { removedList.add(note); true } else { false }
+                note -> if (note.isExpired()) { removedList.add(note); true } else { false }
+            }
+
+            // empty notes
+            it.value.removeAll {
+                note -> if (note.content.isBlank()) { removedList.add(note); true } else { false }
             }
         }
+
         noteReducerScope.launch {
             noteRepo.deleteNotes(removedList)
         }

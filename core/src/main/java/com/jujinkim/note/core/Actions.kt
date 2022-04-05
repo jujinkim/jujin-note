@@ -18,7 +18,7 @@ sealed class NoteAction {
     class UpdateCategory(val category: Category): NoteAction()
     class DeleteCategory(val category: Category, val relatedNotes: List<Note>): NoteAction()
     class CheckNoteHasExpiredAndUpdate(val note: Note): NoteAction()
-    object CheckAllNoteExpiredAndUpdate: NoteAction()
+    object CheckAllNoteInvalidAndUpdate: NoteAction()
 
     object GetFromDbStart: NoteAction()
     data class GetFromDbSuccess(val data: Any?, val type: NoteRepoLoadItemType): NoteAction()
