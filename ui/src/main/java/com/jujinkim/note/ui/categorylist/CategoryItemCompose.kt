@@ -22,7 +22,6 @@ import com.jujinkim.note.model.Category
 fun CategoryListItemPreview() {
     CategoryListItem(
         category = Category("testId", "Title", 0),
-        viewModel = hiltViewModel(),
         onEditCategoryClick = {},
         onRemoveCategoryClick = {}
     )
@@ -31,10 +30,10 @@ fun CategoryListItemPreview() {
 @Composable
 fun CategoryListItem(
     category: Category,
-    viewModel: CategoryListViewModel,
     onEditCategoryClick: (category: Category) -> Unit,
     onRemoveCategoryClick: (category: Category) -> Unit
 ) {
+    val viewModel: CategoryListViewModel = hiltViewModel()
     val isEditMode = viewModel.isEditMode
     Row(
         modifier = Modifier

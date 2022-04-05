@@ -60,12 +60,11 @@ fun CategoryList(
 
     LazyColumn {
         item {
-            CategoryListItem(category = Category.defaultCategory(), viewModel = viewModel, {}, {})
+            CategoryListItem(category = Category.defaultCategory(), {}, {})
         }
         items(viewModel.categories) { category ->
             CategoryListItem(
                 category = category,
-                viewModel,
                 { isShowEditDialog.value = true; categoryForDialog.value = category },
                 { isShowRemoveDialog.value = true; categoryForDialog.value = category }
             )
