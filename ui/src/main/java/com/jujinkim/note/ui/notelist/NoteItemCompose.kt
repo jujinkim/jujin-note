@@ -22,26 +22,28 @@ fun NoteItemPreview() {
 fun NoteItemCompose(note: Note) {
     Column(
         horizontalAlignment = Alignment.End,
-        modifier = Modifier
-            .padding(6.dp)
+        modifier = Modifier.padding(6.dp)
     ) {
         Text(
             text = note.content,
-            modifier = Modifier
-                .fillMaxWidth(),
+            modifier = Modifier.fillMaxWidth(),
             fontSize = 16.sp
         )
         Spacer(modifier = Modifier
             .fillMaxWidth()
-            .height(4.dp))
-        Row(modifier = Modifier.fillMaxWidth()) {
+            .height(4.dp)
+        )
+        Row(modifier = Modifier
+            .wrapContentSize()
+            .wrapContentHeight()
+        ) {
             Text(
-                text = Util.msTimeToString(note.generatedTime),
+                text = Util.millisToDateTimeString(note.generatedTime),
                 fontSize = 12.sp
             )
-            Text(text = "~", fontSize = 12.sp)
+            Text(text = " ~ ", fontSize = 12.sp)
             Text(
-                text = if (note.expiredTime >= 0) Util.msTimeToString(note.expiredTime)
+                text = if (note.expiredTime >= 0) Util.millisToDateString(note.expiredTime)
                 else stringResource(id = R.string.expired_date_permanent),
                 fontSize = 12.sp
             )
