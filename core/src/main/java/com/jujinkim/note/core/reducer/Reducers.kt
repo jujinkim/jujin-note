@@ -33,7 +33,7 @@ class AppReducer @Inject constructor(
         when (action) {
             is NoteAction.AddNote ->
                 NoteReducers.addNote(state, action.note, noteRepo)
-            is NoteAction.deleteNote ->
+            is NoteAction.DeleteNote ->
                 NoteReducers.deleteNote(state, action.note, noteRepo)
             is NoteAction.DeleteNotes ->
                 NoteReducers.deleteNotes(state, action.notes, noteRepo)
