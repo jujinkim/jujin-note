@@ -17,10 +17,17 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.jujinkim.note.ui.BackHandler
 import com.jujinkim.note.ui.R
 import com.jujinkim.note.ui.isWideScreen
+
+@Preview(showBackground = true)
+@Composable
+fun NoteListPreview() {
+    NoteListContent()
+}
 
 @Composable
 fun NoteListContent(viewModel: NoteListViewModel = hiltViewModel()) {
