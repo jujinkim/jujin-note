@@ -163,7 +163,7 @@ fun CategoryRemoveDialog(isShowDialog: Boolean, category: Category, onDismiss: (
                     Text(text = stringResource(R.string.remove_category_dialog_ps, category.title))
                     Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(10.dp)) {
                         Button(onClick = onDismiss) { Text(text = stringResource(R.string.cancel)) }
-                        Button(onClick = { viewModel.invokeRemoveCategories(category); onDismiss() }) {
+                        Button(onClick = { viewModel.invokeDeleteCategory(category); onDismiss() }) {
                             Text(text = stringResource(R.string.okay))
                         }
                     }

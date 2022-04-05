@@ -19,7 +19,7 @@ object NoteReducers {
         }
     }
 
-    fun removeNote(state: AppState, note: Note, noteRepo: NoteRepo) = state.copy().apply {
+    fun deleteNote(state: AppState, note: Note, noteRepo: NoteRepo) = state.copy().apply {
         notes[note.categoryId]?.remove(note)
     }.also {
         noteReducerScope.launch {
@@ -27,7 +27,7 @@ object NoteReducers {
         }
     }
 
-    fun removeNotes(state: AppState, notes: List<Note>, noteRepo: NoteRepo) = state.copy().apply {
+    fun deleteNotes(state: AppState, notes: List<Note>, noteRepo: NoteRepo) = state.copy().apply {
         notes.toList().forEach { note ->
             this.notes[note.categoryId]?.remove(note)
         }
@@ -54,7 +54,7 @@ object NoteReducers {
         }
     }
 
-    fun removeCategory(state: AppState, category: Category, noteRepo: NoteRepo) = state.copy().apply {
+    fun deleteCategory(state: AppState, category: Category, noteRepo: NoteRepo) = state.copy().apply {
         notes.remove(category.id)
         categories.remove(category)
     }.also {

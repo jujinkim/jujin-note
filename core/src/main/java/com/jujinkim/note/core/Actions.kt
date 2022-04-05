@@ -12,11 +12,11 @@ sealed class UiAction {
 
 sealed class NoteAction {
     class AddNote(val note: Note): NoteAction()
-    class RemoveNote(val note: Note): NoteAction()
-    class RemoveNotes(val notes: List<Note>): NoteAction()
+    class deleteNote(val note: Note): NoteAction()
+    class DeleteNotes(val notes: List<Note>): NoteAction()
     class AddCategory(val category: Category): NoteAction()
     class UpdateCategory(val category: Category): NoteAction()
-    class RemoveCategory(val category: Category, val relatedNotes: List<Note>): NoteAction()
+    class DeleteCategory(val category: Category, val relatedNotes: List<Note>): NoteAction()
     class CheckNoteHasExpiredAndUpdate(val note: Note): NoteAction()
     object CheckAllNoteExpiredAndUpdate: NoteAction()
 

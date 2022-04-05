@@ -33,17 +33,17 @@ class AppReducer @Inject constructor(
         when (action) {
             is NoteAction.AddNote ->
                 NoteReducers.addNote(state, action.note, noteRepo)
-            is NoteAction.RemoveNote ->
-                NoteReducers.removeNote(state, action.note, noteRepo)
-            is NoteAction.RemoveNotes ->
-                NoteReducers.removeNotes(state, action.notes, noteRepo)
+            is NoteAction.deleteNote ->
+                NoteReducers.deleteNote(state, action.note, noteRepo)
+            is NoteAction.DeleteNotes ->
+                NoteReducers.deleteNotes(state, action.notes, noteRepo)
             is NoteAction.AddCategory ->
                 NoteReducers.addCategory(state, action.category, noteRepo)
             is NoteAction.UpdateCategory ->
                 NoteReducers.updateCategory(state, action.category, noteRepo)
-            is NoteAction.RemoveCategory -> {
-                val tmpState = NoteReducers.removeNotes(state, action.relatedNotes, noteRepo)
-                NoteReducers.removeCategory(tmpState, action.category, noteRepo)
+            is NoteAction.DeleteCategory -> {
+                val tmpState = NoteReducers.deleteNotes(state, action.relatedNotes, noteRepo)
+                NoteReducers.deleteCategory(tmpState, action.category, noteRepo)
             }
             is NoteAction.CheckNoteHasExpiredAndUpdate ->
                 NoteReducers.checkNoteHasExpired(state, action.note, noteRepo)
