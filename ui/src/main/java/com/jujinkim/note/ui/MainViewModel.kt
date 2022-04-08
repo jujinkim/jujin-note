@@ -23,6 +23,10 @@ class MainViewModel @Inject constructor(
         currentScreen = store.state.currentScreen
     }
 
+    fun onMainExit() {
+        store.dispatch(NoteAction.CheckAllNoteInvalidAndUpdate)
+    }
+
     override fun onCleared() {
         unsubscribe()
         super.onCleared()

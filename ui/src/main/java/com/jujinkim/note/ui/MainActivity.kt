@@ -44,6 +44,11 @@ class MainActivity : ComponentActivity() {
             }
         }
     }
+
+    override fun onDestroy() {
+        viewModel.onMainExit()
+        super.onDestroy()
+    }
 }
 
 @ExperimentalAnimationApi
