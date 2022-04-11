@@ -12,6 +12,7 @@ sealed class UiAction {
 
 sealed class NoteAction {
     class AddNote(val note: Note): NoteAction()
+    class UpdateNote(val note: Note): NoteAction()
     class DeleteNote(val note: Note): NoteAction()
     class DeleteNotes(val notes: List<Note>): NoteAction()
     class AddCategory(val category: Category): NoteAction()

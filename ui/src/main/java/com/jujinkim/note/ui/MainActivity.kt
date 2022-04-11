@@ -7,6 +7,7 @@ import androidx.activity.compose.LocalOnBackPressedDispatcherOwner
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
 import androidx.compose.animation.ExperimentalAnimationApi
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
@@ -22,6 +23,7 @@ val localMainViewModel = compositionLocalOf<MainViewModel> {
     error("MainActivityViewModel not provided")
 }
 
+@ExperimentalFoundationApi
 @ExperimentalAnimationApi
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
@@ -51,6 +53,7 @@ class MainActivity : ComponentActivity() {
     }
 }
 
+@ExperimentalFoundationApi
 @ExperimentalAnimationApi
 @Composable
 fun MainContent() {
@@ -61,6 +64,7 @@ fun MainContent() {
     }
 }
 
+@ExperimentalFoundationApi
 @ExperimentalAnimationApi
 @Preview(showBackground = true)
 @Composable

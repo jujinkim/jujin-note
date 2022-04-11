@@ -2,6 +2,7 @@ package com.jujinkim.note.ui
 
 import androidx.compose.animation.AnimatedContent
 import androidx.compose.animation.ExperimentalAnimationApi
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.runtime.Composable
@@ -12,6 +13,7 @@ import com.jujinkim.note.core.AppScreen
 import com.jujinkim.note.ui.categorylist.CategoryListContent
 import com.jujinkim.note.ui.notelist.NoteListContent
 
+@ExperimentalFoundationApi
 @ExperimentalAnimationApi
 @Composable
 fun MainActivityPhoneContent(viewModel: MainViewModel = hiltViewModel()) {
@@ -24,6 +26,7 @@ fun MainActivityPhoneContent(viewModel: MainViewModel = hiltViewModel()) {
     }
 }
 
+@ExperimentalFoundationApi
 @ExperimentalAnimationApi
 @Composable
 fun MainActivityTabletContent(viewModel: MainViewModel = hiltViewModel()) {

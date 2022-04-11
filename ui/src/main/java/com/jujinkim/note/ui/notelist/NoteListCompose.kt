@@ -1,15 +1,12 @@
 package com.jujinkim.note.ui.notelist
 
 import android.app.Activity
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
+import android.app.DatePickerDialog
+import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.material.Button
-import androidx.compose.material.Scaffold
-import androidx.compose.material.Text
-import androidx.compose.material.TextField
+import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -17,18 +14,26 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.window.Dialog
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.jujinkim.note.model.Note
 import com.jujinkim.note.ui.BackHandler
 import com.jujinkim.note.ui.R
 import com.jujinkim.note.ui.isWideScreen
+import com.jujinkim.note.util.Util
+import java.util.*
 
+@ExperimentalFoundationApi
 @Preview(showBackground = true)
 @Composable
 fun NoteListPreview() {
     NoteListContent()
 }
 
+@ExperimentalFoundationApi
 @Composable
 fun NoteListContent(viewModel: NoteListViewModel = hiltViewModel()) {
     val isWideScreen = isWideScreen()
@@ -41,6 +46,9 @@ fun NoteListContent(viewModel: NoteListViewModel = hiltViewModel()) {
         }
     }
 
+    val isShowOptionDialog = remember { mutableStateOf(false) }
+    val selectedNoteForDialog = remember { mutableStateOf(Note.new("", "")) }
+
     Scaffold (
         topBar = { NoteListTopBar() }
     ) {
@@ -49,14 +57,21 @@ fun NoteListContent(viewModel: NoteListViewModel = hiltViewModel()) {
                 modifier = Modifier.weight(1f),
                 verticalArrangement = Arrangement.Bottom
             ) {
-                items(viewModel.notes) {
-                    NoteItemCompose(note = it)
+                items(viewModel.notes) { note ->
+                    NoteItemCompose(
+                        note = note
+                    ) { isShowOptionDialog.value = true; selectedNoteForDialog.value = note }
                 }
             }
             NoteInput { viewModel.invokeAddNote(it) }
         }
     }
 
+    NoteOptionDialog(
+        isShowDialog = isShowOptionDialog.value,
+        note = selectedNoteForDialog. value,
+        onDismiss = { isShowOptionDialog.value = false }
+    )
 }
 
 @Composable
@@ -81,6 +96,81 @@ fun NoteInput(onNoteAddClick: (note: String) -> Unit) {
         TextField(modifier = Modifier.weight(1f), value = noteInput.value, onValueChange = { noteInput.value = it })
         Button(onClick = { onNoteAddClick(noteInput.value); noteInput.value = "" }) {
             Text(text = stringResource(R.string.add_note))
+        }
+    }
+}
+
+@Composable
+fun NoteOptionDialog(isShowDialog: Boolean, note: Note, onDismiss: () -> Unit) {
+    val newExpiredDate = remember { mutableStateOf(note.expiredTime) }
+    val calNow = Calendar.getInstance().apply {
+        if (newExpiredDate.value >= 0) timeInMillis = newExpiredDate.value
+    }
+    val context = LocalContext.current
+
+    val viewModel: NoteListViewModel = hiltViewModel()
+    if (isShowDialog) {
+        Dialog(onDismissRequest = onDismiss) {
+            Surface(
+                modifier = Modifier
+                    .width(320.dp)
+                    .wrapContentHeight(),
+                shape = MaterialTheme.shapes.medium,
+                color = MaterialTheme.colors.background
+            ) {
+                Column(horizontalAlignment = Alignment.CenterHorizontally) {
+                    // Content
+                    Text(
+                        text = note.content,
+                        maxLines = 1, overflow = TextOverflow.Ellipsis
+                    )
+                    // Generated at
+                    Text(
+                        text = stringResource(R.string.note_generated_at_ps,
+                            Util.millisToDateTimeString(note.generatedTime)),
+                    )
+                    // Expired at
+                    Row {
+                        Text(
+                            text = stringResource(R.string.note_expired_at_ps,
+                                Util.millisToDateString(newExpiredDate.value)),
+                        )
+                        // Change expired date
+                        Button(onClick = {
+                            DatePickerDialog(
+                                context,
+                                {_, year, month, day ->
+                                    Calendar.getInstance().run {
+                                        set(year, month, day)
+                                        newExpiredDate.value = timeInMillis
+                                    }
+                                    viewModel.invokeChangeExpiredDateNote(note, newExpiredDate.value)
+                                },
+                                calNow.get(Calendar.YEAR),
+                                calNow.get(Calendar.MONDAY),
+                                calNow.get(Calendar.DAY_OF_MONTH)
+                            ).show()
+                        }) {
+                            Text(text = stringResource(R.string.change_expired_date))
+                        }
+                        // Make this note permanent
+                        Button(onClick = { viewModel.invokeChangeExpiredDateNote(note, -1) }) {
+                            Text(text = stringResource(R.string.make_expired_date_permanent))
+                        }
+                    }
+
+                    // Buttons
+                    Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(10.dp)) {
+                        // Delete note
+                        Button(onClick = { viewModel.invokeDeleteNote(note); onDismiss() }) {
+                            Text(text = stringResource(R.string.delete_note))
+                        }
+
+                        // Cancel
+                        Button(onClick = onDismiss) { Text(text = stringResource(R.string.cancel)) }
+                    }
+                }
+            }
         }
     }
 }

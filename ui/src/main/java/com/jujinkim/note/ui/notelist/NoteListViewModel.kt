@@ -42,6 +42,14 @@ class NoteListViewModel @Inject constructor(
         ))
     }
 
+    fun invokeDeleteNote(note: Note) {
+        store.dispatch(NoteAction.DeleteNote(note))
+    }
+
+    fun invokeChangeExpiredDateNote(note: Note, newExpiredDate: Long) {
+        store.dispatch(NoteAction.UpdateNote(note.copy(expiredTime = newExpiredDate)))
+    }
+
     override fun onCleared() {
         unsubscribe()
         super.onCleared()

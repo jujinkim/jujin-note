@@ -19,6 +19,19 @@ object NoteReducers {
         }
     }
 
+    fun updateNote(state: AppState, note: Note, noteRepo: NoteRepo) = state.copy().apply {
+        val idx = notes.getOrPut(note.categoryId) { mutableListOf() }.indexOfFirst { it.id == note.id }
+        if (idx < 0) {
+            notes.getOrPut(note.categoryId) { mutableListOf() }.add(note)
+        } else {
+            notes.getOrPut(note.categoryId) { mutableListOf() }[idx] = note
+        }
+    }.also {
+        noteReducerScope.launch {
+            noteRepo.saveNote(note, false)
+        }
+    }
+
     fun deleteNote(state: AppState, note: Note, noteRepo: NoteRepo) = state.copy().apply {
         notes[note.categoryId]?.remove(note)
     }.also {
