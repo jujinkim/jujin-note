@@ -149,7 +149,9 @@ fun NoteOptionDialog(isShowDialog: Boolean, note: Note, onDismiss: () -> Unit) {
                                 calNow.get(Calendar.YEAR),
                                 calNow.get(Calendar.MONDAY),
                                 calNow.get(Calendar.DAY_OF_MONTH)
-                            ).show()
+                            ).apply {
+                                datePicker.minDate = calNow.timeInMillis
+                            }.show()
                         }) {
                             Text(text = stringResource(R.string.change_expired_date))
                         }
