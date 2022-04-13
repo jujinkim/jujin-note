@@ -43,6 +43,10 @@ class CategoryListViewModel @Inject constructor(
         store.dispatch(UiAction.NavigateToNotes(category))
     }
 
+    fun invokeOpenSetting() {
+        store.dispatch(UiAction.NavigateToSettings)
+    }
+
     fun invokeToggleCategoryEditMode() {
         store.dispatch(UiAction.ToggleCategoryEditMode)
     }

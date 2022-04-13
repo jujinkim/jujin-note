@@ -44,7 +44,7 @@ fun CategoryListTopBar(viewModel: CategoryListViewModel = hiltViewModel()) {
             Text("edit")
         }
         // go to setting
-        Button(onClick = { /*TODO*/ }) {
+        Button(onClick = { viewModel.invokeOpenSetting() }) {
             Text("setting")
         }
     }

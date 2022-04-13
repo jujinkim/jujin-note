@@ -12,6 +12,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import com.jujinkim.note.core.AppScreen
 import com.jujinkim.note.ui.categorylist.CategoryListContent
 import com.jujinkim.note.ui.notelist.NoteListContent
+import com.jujinkim.note.ui.setting.SettingContent
 
 @ExperimentalFoundationApi
 @ExperimentalAnimationApi
@@ -21,7 +22,7 @@ fun MainActivityPhoneContent(viewModel: MainViewModel = hiltViewModel()) {
         when (currentScreen) {
             AppScreen.CATEGORY_LIST -> CategoryListContent()
             AppScreen.NOTE_LIST -> NoteListContent()
-            AppScreen.SETTING -> TODO()
+            AppScreen.SETTING -> SettingContent()
         }
     }
 }
@@ -38,7 +39,7 @@ fun MainActivityTabletContent(viewModel: MainViewModel = hiltViewModel()) {
             AnimatedContent(targetState = viewModel.currentScreen) { currentScreen ->
                 when (currentScreen) {
                     AppScreen.CATEGORY_LIST, AppScreen.NOTE_LIST -> NoteListContent()
-                    AppScreen.SETTING -> TODO()
+                    AppScreen.SETTING -> SettingContent()
                 }
             }
 
