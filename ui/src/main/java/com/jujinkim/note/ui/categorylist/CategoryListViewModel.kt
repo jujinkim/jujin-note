@@ -47,6 +47,8 @@ class CategoryListViewModel @Inject constructor(
         store.dispatch(UiAction.ToggleCategoryEditMode)
     }
 
+    fun getNoteCount(category: Category) = store.state.notes[category.id]?.size ?: 0
+
     override fun onCleared() {
         unsubscribe()
         super.onCleared()
