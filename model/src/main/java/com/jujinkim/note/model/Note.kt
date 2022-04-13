@@ -10,7 +10,7 @@ data class Note(
     val generatedTime: Long,
     val expiredTime: Long = -1
 ) {
-    fun isExpired() = expiredTime < System.currentTimeMillis()
+    fun isExpired() = expiredTime >= 0 && expiredTime < System.currentTimeMillis()
 
     companion object {
         fun new(catId: String, content: String, icon: Int = 0, expiredTime: Long = -1) : Note {
