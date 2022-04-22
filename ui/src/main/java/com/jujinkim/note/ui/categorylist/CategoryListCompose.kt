@@ -13,6 +13,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.jujinkim.note.model.Category
+import com.jujinkim.note.ui.AppDialog
 import com.jujinkim.note.ui.R
 
 @Preview(showBackground = true)
@@ -98,26 +99,15 @@ fun CategoryAddButton() {
 @Composable
 fun CategoryAddDialog(isShowDialog: Boolean, onDismiss: () -> Unit) {
     val viewModel: CategoryListViewModel = hiltViewModel()
-    if (isShowDialog) {
-        val input = remember { mutableStateOf("") }
-
-        Dialog(onDismissRequest = onDismiss) {
-            Surface(
-                modifier = Modifier
-                    .width(320.dp)
-                    .wrapContentHeight(),
-                shape = MaterialTheme.shapes.medium,
-                color = MaterialTheme.colors.background
-            ) {
-                Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                    Text(text = stringResource(R.string.add_category))
-                    TextField(value = input.value, onValueChange = { input.value = it}, placeholder = {})
-                    Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(10.dp)) {
-                        Button(onClick = onDismiss) { Text(text = stringResource(R.string.cancel)) }
-                        Button(onClick = { viewModel.invokeAddCategory(input.value); onDismiss() }) {
-                            Text(text = stringResource(R.string.okay))
-                        }
-                    }
+    val input = remember { mutableStateOf("") }
+    AppDialog(isShowDialog = isShowDialog, onDismiss = onDismiss) {
+        Column(horizontalAlignment = Alignment.CenterHorizontally) {
+            Text(text = stringResource(R.string.add_category))
+            TextField(value = input.value, onValueChange = { input.value = it}, placeholder = {})
+            Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(10.dp)) {
+                Button(onClick = onDismiss) { Text(text = stringResource(R.string.cancel)) }
+                Button(onClick = { viewModel.invokeAddCategory(input.value); onDismiss() }) {
+                    Text(text = stringResource(R.string.okay))
                 }
             }
         }
@@ -127,26 +117,15 @@ fun CategoryAddDialog(isShowDialog: Boolean, onDismiss: () -> Unit) {
 @Composable
 fun CategoryEditDialog(isShowDialog: Boolean, category: Category, onDismiss: () -> Unit) {
     val viewModel: CategoryListViewModel = hiltViewModel()
-    if (isShowDialog) {
-        val input = remember { mutableStateOf("") }
-
-        Dialog(onDismissRequest = onDismiss) {
-            Surface(
-                modifier = Modifier
-                    .width(320.dp)
-                    .wrapContentHeight(),
-                shape = MaterialTheme.shapes.medium,
-                color = MaterialTheme.colors.background
-            ) {
-                Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                    Text(text = stringResource(R.string.edit_category_name))
-                    TextField(value = input.value, onValueChange = { input.value = it}, placeholder = {})
-                    Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(10.dp)) {
-                        Button(onClick = onDismiss) { Text(text = stringResource(R.string.cancel)) }
-                        Button(onClick = { viewModel.invokeEditCategory(category, input.value); onDismiss() }) {
-                            Text(text = stringResource(R.string.okay))
-                        }
-                    }
+    val input = remember { mutableStateOf("") }
+    AppDialog(isShowDialog = isShowDialog, onDismiss = onDismiss) {
+        Column(horizontalAlignment = Alignment.CenterHorizontally) {
+            Text(text = stringResource(R.string.edit_category_name))
+            TextField(value = input.value, onValueChange = { input.value = it}, placeholder = {})
+            Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(10.dp)) {
+                Button(onClick = onDismiss) { Text(text = stringResource(R.string.cancel)) }
+                Button(onClick = { viewModel.invokeEditCategory(category, input.value); onDismiss() }) {
+                    Text(text = stringResource(R.string.okay))
                 }
             }
         }
@@ -156,23 +135,13 @@ fun CategoryEditDialog(isShowDialog: Boolean, category: Category, onDismiss: () 
 @Composable
 fun CategoryRemoveDialog(isShowDialog: Boolean, category: Category, onDismiss: () -> Unit) {
     val viewModel: CategoryListViewModel = hiltViewModel()
-    if (isShowDialog) {
-        Dialog(onDismissRequest = onDismiss) {
-            Surface(
-                modifier = Modifier
-                    .width(320.dp)
-                    .wrapContentHeight(),
-                shape = MaterialTheme.shapes.medium,
-                color = MaterialTheme.colors.background
-            ) {
-                Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                    Text(text = stringResource(R.string.remove_category_dialog_ps, category.title))
-                    Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(10.dp)) {
-                        Button(onClick = onDismiss) { Text(text = stringResource(R.string.cancel)) }
-                        Button(onClick = { viewModel.invokeDeleteCategory(category); onDismiss() }) {
-                            Text(text = stringResource(R.string.okay))
-                        }
-                    }
+    AppDialog(isShowDialog = isShowDialog, onDismiss = onDismiss) {
+        Column(horizontalAlignment = Alignment.CenterHorizontally) {
+            Text(text = stringResource(R.string.remove_category_dialog_ps, category.title))
+            Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(10.dp)) {
+                Button(onClick = onDismiss) { Text(text = stringResource(R.string.cancel)) }
+                Button(onClick = { viewModel.invokeDeleteCategory(category); onDismiss() }) {
+                    Text(text = stringResource(R.string.okay))
                 }
             }
         }

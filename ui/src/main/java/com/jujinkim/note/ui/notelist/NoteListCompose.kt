@@ -20,6 +20,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.jujinkim.note.model.Note
+import com.jujinkim.note.ui.AppDialog
 import com.jujinkim.note.ui.BackHandler
 import com.jujinkim.note.ui.R
 import com.jujinkim.note.ui.isWideScreen
@@ -109,69 +110,66 @@ fun NoteOptionDialog(isShowDialog: Boolean, note: Note, onDismiss: () -> Unit) {
     val context = LocalContext.current
 
     val viewModel: NoteListViewModel = hiltViewModel()
-    if (isShowDialog) {
-        Dialog(onDismissRequest = onDismiss) {
-            Surface(
-                modifier = Modifier
-                    .width(320.dp)
-                    .wrapContentHeight(),
-                shape = MaterialTheme.shapes.medium,
-                color = MaterialTheme.colors.background
-            ) {
-                Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                    // Content
-                    Text(
-                        text = note.content,
-                        maxLines = 1, overflow = TextOverflow.Ellipsis
-                    )
-                    // Generated at
-                    Text(
-                        text = stringResource(R.string.note_generated_at_ps,
-                            Util.millisToDateTimeString(note.generatedTime)),
-                    )
-                    // Expired at
-                    Row {
-                        Text(
-                            text = stringResource(R.string.note_expired_at_ps,
-                                Util.millisToDateString(newExpiredDate.value)),
-                        )
-                        // Change expired date
-                        Button(onClick = {
-                            DatePickerDialog(
-                                context,
-                                {_, year, month, day ->
-                                    Calendar.getInstance().run {
-                                        set(year, month, day)
-                                        newExpiredDate.value = timeInMillis
-                                    }
-                                    viewModel.invokeChangeExpiredDateNote(note, newExpiredDate.value)
-                                },
-                                calNow.get(Calendar.YEAR),
-                                calNow.get(Calendar.MONDAY),
-                                calNow.get(Calendar.DAY_OF_MONTH)
-                            ).apply {
-                                datePicker.minDate = calNow.timeInMillis
-                            }.show()
-                        }) {
-                            Text(text = stringResource(R.string.change_expired_date))
-                        }
-                        // Make this note permanent
-                        Button(onClick = { viewModel.invokeChangeExpiredDateNote(note, -1) }) {
-                            Text(text = stringResource(R.string.make_expired_date_permanent))
-                        }
-                    }
-
-                    // Buttons
-                    Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(10.dp)) {
-                        // Delete note
-                        Button(onClick = { viewModel.invokeDeleteNote(note); onDismiss() }) {
-                            Text(text = stringResource(R.string.delete_note))
-                        }
-
-                        // Cancel
-                        Button(onClick = onDismiss) { Text(text = stringResource(R.string.cancel)) }
-                    }
+    AppDialog(isShowDialog = isShowDialog, onDismiss = onDismiss) {
+        Column(horizontalAlignment = Alignment.CenterHorizontally) {
+            // Content
+            Text(
+                text = note.content,
+                maxLines = 1, overflow = TextOverflow.Ellipsis
+            )
+            // Generated at
+            Text(
+                text = stringResource(
+                    R.string.note_generated_at_ps,
+                    Util.millisToDateTimeString(note.generatedTime)
+                ),
+            )
+            // Expired at
+            Row {
+                Text(
+                    text = stringResource(
+                        R.string.note_expired_at_ps,
+                        Util.millisToDateString(newExpiredDate.value)
+                    ),
+                )
+                // Change expired date
+                Button(onClick = {
+                    DatePickerDialog(
+                        context,
+                        { _, year, month, day ->
+                            Calendar.getInstance().run {
+                                set(year, month, day)
+                                newExpiredDate.value = timeInMillis
+                            }
+                            viewModel.invokeChangeExpiredDateNote(note, newExpiredDate.value)
+                        },
+                        calNow.get(Calendar.YEAR),
+                        calNow.get(Calendar.MONDAY),
+                        calNow.get(Calendar.DAY_OF_MONTH)
+                    ).apply {
+                        datePicker.minDate = calNow.timeInMillis
+                    }.show()
+                }) {
+                    Text(text = stringResource(R.string.change_expired_date))
                 }
+                // Make this note permanent
+                Button(onClick = { viewModel.invokeChangeExpiredDateNote(note, -1) }) {
+                    Text(text = stringResource(R.string.make_expired_date_permanent))
+                }
+            }
+
+            // Buttons
+            Row(
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.spacedBy(10.dp)
+            ) {
+                // Delete note
+                Button(onClick = { viewModel.invokeDeleteNote(note); onDismiss() }) {
+                    Text(text = stringResource(R.string.delete_note))
+                }
+
+                // Cancel
+                Button(onClick = onDismiss) { Text(text = stringResource(R.string.cancel)) }
             }
         }
     }
