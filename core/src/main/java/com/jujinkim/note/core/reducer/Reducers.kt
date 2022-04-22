@@ -1,13 +1,16 @@
 package com.jujinkim.note.core.reducer
 
+import android.content.Context
 import com.jujinkim.note.core.*
 import com.jujinkim.note.data.repo.NoteRepo
+import dagger.hilt.android.qualifiers.ApplicationContext
 import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
 class AppReducer @Inject constructor(
-    private val noteRepo: NoteRepo
+    private val noteRepo: NoteRepo,
+    @ApplicationContext private val context: Context
 ) {
     fun rootReducer(state: AppState, action: Any) =
         when (action) {
@@ -57,5 +60,12 @@ class AppReducer @Inject constructor(
                 NoteReducers.getFromDbSuccess(state, action.data, action.type)
             is NoteAction.GetFromDbFailed ->
                 NoteReducers.getFromDbFailed(state, action.msg)
+        }
+
+    private fun settingReducer(state: AppState, action: SettingAction) =
+        when (action) {
+            is SettingAction.LoadSetting -> SettingReducers.loadSetting(state, context)
+            is SettingAction.SaveSetting -> SettingReducers.saveSetting(state, context, action.setting)
+            is SettingAction.SyncNotesRemote -> TODO()
         }
 }

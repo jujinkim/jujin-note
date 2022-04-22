@@ -2,6 +2,7 @@ package com.jujinkim.note.core
 
 import com.jujinkim.note.model.Note
 import com.jujinkim.note.model.Category
+import com.jujinkim.note.model.Setting
 
 typealias CategoryId = String
 typealias Notes = MutableList<Note>
@@ -16,7 +17,10 @@ data class AppState (
 
     // view state
     val focusedCategory: Category = Category.new(""),
-    val currentScreen: AppScreen = AppScreen.CATEGORY_LIST
+    val currentScreen: AppScreen = AppScreen.CATEGORY_LIST,
+
+    // setting
+    val setting: Setting = Setting()
 ) {
     val categoryId: String get() = focusedCategory.id
     val categoryTitle: String get() = focusedCategory.title

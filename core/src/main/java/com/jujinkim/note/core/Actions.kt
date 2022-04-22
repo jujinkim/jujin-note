@@ -2,6 +2,7 @@ package com.jujinkim.note.core
 
 import com.jujinkim.note.model.Note
 import com.jujinkim.note.model.Category
+import com.jujinkim.note.model.Setting
 
 sealed class UiAction {
     object NavigateToCategories: UiAction()
@@ -27,8 +28,8 @@ sealed class NoteAction {
 }
 
 sealed class SettingAction {
-    object SaveSetting: SettingAction()
     object LoadSetting: SettingAction()
+    data class SaveSetting(val setting: Setting): SettingAction()
     object SyncNotesRemote: SettingAction()
 
 }
