@@ -1,5 +1,6 @@
 package com.jujinkim.note.core.di
 
+import android.content.Context
 import com.jujinkim.note.core.AppState
 import com.jujinkim.note.core.DatabaseThunks
 import com.jujinkim.note.core.reducer.AppReducer
@@ -7,6 +8,7 @@ import com.jujinkim.note.data.repo.NoteRepo
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
+import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import org.reduxkotlin.Store
 import org.reduxkotlin.applyMiddleware
@@ -29,8 +31,8 @@ class ReduxModule {
 
     @Provides
     @Singleton
-    fun provideReducer(noteRepo: NoteRepo): AppReducer {
-        return AppReducer(noteRepo)
+    fun provideReducer(noteRepo: NoteRepo, @ApplicationContext context: Context): AppReducer {
+        return AppReducer(noteRepo, context)
     }
 
     @Provides
