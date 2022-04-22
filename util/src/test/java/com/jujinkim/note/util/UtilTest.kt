@@ -22,4 +22,9 @@ internal class UtilTest {
         assertEquals("2 Mar 2011", Util.millisToDateString(1299024000000))
         assertEquals("28 Dec 2135", Util.millisToDateString(5238116730000))
     }
+
+    @Test
+    fun calcExpiredTimeByDays() {
+        assertEquals(1651244400000, Util.calcExpiredTimeByDays(1650623597516, 7))
+    }
 }

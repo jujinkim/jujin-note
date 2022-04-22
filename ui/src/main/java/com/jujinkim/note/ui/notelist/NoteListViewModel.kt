@@ -8,6 +8,7 @@ import com.jujinkim.note.core.AppState
 import com.jujinkim.note.core.NoteAction
 import com.jujinkim.note.core.UiAction
 import com.jujinkim.note.model.Note
+import com.jujinkim.note.util.Util
 import dagger.hilt.android.lifecycle.HiltViewModel
 import org.reduxkotlin.Store
 import javax.inject.Inject
@@ -37,7 +38,11 @@ class NoteListViewModel @Inject constructor(
         store.dispatch(NoteAction.AddNote(
             Note.new(
                 categoryId,
-                content
+                content,
+                expiredTime = Util.calcExpiredTimeByDays(
+                    System.currentTimeMillis(),
+                    store.state.setting.defaultExpiredDay
+                )
             )
         ))
     }
