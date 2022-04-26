@@ -24,5 +24,6 @@
     <string name="settings_default_expired_date">Default expired date</string>
     <string name="settings_default_expired_date_after_pd_days">After %d days</string>
     <string name="settings_default_expired_date_permanent">Permanent</string>
+    <string name="settings_expired_date_pd_days">%d days</string>
     <string name="settings_about">About</string>
 </resources>

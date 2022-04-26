@@ -7,6 +7,7 @@ import androidx.lifecycle.ViewModel
 import com.jujinkim.note.core.AppState
 import com.jujinkim.note.core.SettingAction
 import com.jujinkim.note.core.UiAction
+import com.jujinkim.note.model.Setting
 import dagger.hilt.android.lifecycle.HiltViewModel
 import org.reduxkotlin.Store
 import javax.inject.Inject
@@ -25,8 +26,8 @@ class SettingViewModel @Inject constructor(
         store.dispatch(UiAction.NavigateToCategories)
     }
 
-    fun invokeSaveSetting() {
-        store.dispatch(SettingAction.SaveSetting(currentSetting))
+    fun invokeSaveSetting(newSetting: Setting) {
+        store.dispatch(SettingAction.SaveSetting(newSetting))
     }
 
     fun invokeLoadSetting() {

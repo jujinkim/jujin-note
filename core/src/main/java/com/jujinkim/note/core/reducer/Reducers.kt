@@ -16,7 +16,7 @@ class AppReducer @Inject constructor(
         when (action) {
             is NoteAction -> notesReducer(state, action)
             is UiAction -> uiReducer(state, action)
-            is SettingAction -> state   // not implemented
+            is SettingAction -> settingReducer(state, action)   // not implemented
             else -> state
         }
 
