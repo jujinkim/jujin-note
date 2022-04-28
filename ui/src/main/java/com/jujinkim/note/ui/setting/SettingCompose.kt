@@ -148,6 +148,12 @@ fun SettingExpiredDayDialog(isShowDialog: Boolean, onDismiss: () -> Unit) {
                     }
                 })
             }
+            Button(
+                onClick = onDismiss,
+                modifier = Modifier.wrapContentSize().align(Alignment.End)
+            ) {
+                Text(text = stringResource(id = R.string.close))
+            }
         }
     }
 }
