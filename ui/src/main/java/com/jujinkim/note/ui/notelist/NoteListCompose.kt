@@ -191,7 +191,7 @@ fun NoteOptionDialog(isShowDialog: Boolean, note: Note, onDismiss: () -> Unit) {
 
                 // Cancel
                 IconButton(onClick = onDismiss) {
-                    Icon(AppIcons.Close, stringResource(R.string.cancel))
+                    Icon(AppIcons.Check, stringResource(R.string.cancel))
                 }
             }
         }
