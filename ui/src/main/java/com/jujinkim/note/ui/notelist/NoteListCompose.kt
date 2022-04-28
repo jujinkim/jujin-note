@@ -7,9 +7,7 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.*
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
@@ -25,6 +23,7 @@ import com.jujinkim.note.ui.BackHandler
 import com.jujinkim.note.ui.R
 import com.jujinkim.note.ui.isWideScreen
 import com.jujinkim.note.util.Util
+import kotlinx.coroutines.delay
 import java.util.*
 
 @ExperimentalFoundationApi
@@ -103,14 +102,18 @@ fun NoteInput(onNoteAddClick: (note: String) -> Unit) {
 
 @Composable
 fun NoteOptionDialog(isShowDialog: Boolean, note: Note, onDismiss: () -> Unit) {
-    val newExpiredDate = remember { mutableStateOf(note.expiredTime) }
+    var deleteNoteTimerCount by remember { mutableStateOf(0) }
+    val dismissDialog = { deleteNoteTimerCount = 0; onDismiss() }
+
+    var newExpiredDate by remember { mutableStateOf(note.expiredTime) }
     val calNow = Calendar.getInstance().apply {
-        if (newExpiredDate.value >= 0) timeInMillis = newExpiredDate.value
+        if (newExpiredDate >= 0) timeInMillis = newExpiredDate
     }
     val context = LocalContext.current
 
+
     val viewModel: NoteListViewModel = hiltViewModel()
-    AppDialog(isShowDialog = isShowDialog, onDismiss = onDismiss) {
+    AppDialog(isShowDialog = isShowDialog, onDismiss = dismissDialog) {
         Column(horizontalAlignment = Alignment.CenterHorizontally) {
             // Content
             Text(
@@ -128,12 +131,12 @@ fun NoteOptionDialog(isShowDialog: Boolean, note: Note, onDismiss: () -> Unit) {
             Row {
                 Text(
                     text = stringResource(
-                        if (newExpiredDate.value < 0) {
+                        if (newExpiredDate < 0) {
                             R.string.expired_date_permanent
                         } else {
                             R.string.note_expired_at_ps
                         },
-                        Util.millisToDateString(newExpiredDate.value)
+                        Util.millisToDateString(newExpiredDate)
                     ),
                 )
                 // Change expired date
@@ -143,9 +146,9 @@ fun NoteOptionDialog(isShowDialog: Boolean, note: Note, onDismiss: () -> Unit) {
                         { _, year, month, day ->
                             Calendar.getInstance().run {
                                 set(year, month, day)
-                                newExpiredDate.value = timeInMillis
+                                newExpiredDate = timeInMillis
                             }
-                            viewModel.invokeChangeExpiredDateNote(note, newExpiredDate.value)
+                            viewModel.invokeChangeExpiredDateNote(note, newExpiredDate)
                         },
                         calNow.get(Calendar.YEAR),
                         calNow.get(Calendar.MONDAY),
@@ -168,12 +171,26 @@ fun NoteOptionDialog(isShowDialog: Boolean, note: Note, onDismiss: () -> Unit) {
                 horizontalArrangement = Arrangement.spacedBy(10.dp)
             ) {
                 // Delete note
-                Button(onClick = { viewModel.invokeDeleteNote(note); onDismiss() }) {
-                    Text(text = stringResource(R.string.delete_note))
+                if (deleteNoteTimerCount <= 0) {
+                    Button(onClick = { deleteNoteTimerCount = 3 }) {
+                        Text(text = stringResource(R.string.delete_note))
+                    }
+                } else {
+                    Button(onClick = {
+                        deleteNoteTimerCount = 0
+                        viewModel.invokeDeleteNote(note)
+                        dismissDialog()
+                    }) {
+                        Text(text = deleteNoteTimerCount.toString())
+                    }
+                    LaunchedEffect(key1 = deleteNoteTimerCount) {
+                        delay(500L)
+                        deleteNoteTimerCount -= 1
+                    }
                 }
 
                 // Cancel
-                Button(onClick = onDismiss) { Text(text = stringResource(R.string.cancel)) }
+                Button(onClick = dismissDialog) { Text(text = stringResource(R.string.cancel)) }
             }
         }
     }
