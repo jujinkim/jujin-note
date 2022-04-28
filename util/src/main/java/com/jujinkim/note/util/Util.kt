@@ -23,7 +23,7 @@ object Util {
     fun calcExpiredTimeByDays(currentMillis: Long, days: Int) : Long {
         if (days < 0) return -1
 
-        val millisDays = 1000 * 60 * 60 * 24 * (days + 1)   // expired at the end of day
+        val millisDays = 1000L * 60 * 60 * 24 * (days + 1)   // expired at the end of day
 
         val cal = Calendar.getInstance().apply {
             timeInMillis = currentMillis

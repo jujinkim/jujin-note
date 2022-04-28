@@ -26,6 +26,7 @@ internal class UtilTest {
     @Test
     fun calcExpiredTimeByDays() {
         assertEquals(1651244400000, Util.calcExpiredTimeByDays(1650623597516, 7))
+        assertEquals(1653750000000, Util.calcExpiredTimeByDays(1651126314802, 30))
         assertEquals(-1, Util.calcExpiredTimeByDays(1650623597516, -1))
     }
 }
