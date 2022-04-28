@@ -128,7 +128,11 @@ fun NoteOptionDialog(isShowDialog: Boolean, note: Note, onDismiss: () -> Unit) {
             Row {
                 Text(
                     text = stringResource(
-                        R.string.note_expired_at_ps,
+                        if (newExpiredDate.value < 0) {
+                            R.string.expired_date_permanent
+                        } else {
+                            R.string.note_expired_at_ps
+                        },
                         Util.millisToDateString(newExpiredDate.value)
                     ),
                 )
