@@ -5,10 +5,10 @@ import android.widget.NumberPicker
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.material.Button
-import androidx.compose.material.RadioButton
-import androidx.compose.material.Scaffold
-import androidx.compose.material.Text
+import androidx.compose.material.*
+import androidx.compose.material.icons.rounded.ArrowBack
+import androidx.compose.material.icons.rounded.Check
+import androidx.compose.material.icons.rounded.Close
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -18,10 +18,8 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.jujinkim.note.ui.AppDialog
-import com.jujinkim.note.ui.BackHandler
+import com.jujinkim.note.ui.*
 import com.jujinkim.note.ui.R
-import com.jujinkim.note.ui.isWideScreen
 
 @Composable
 fun SettingContent(viewModel: SettingViewModel = hiltViewModel()) {
@@ -56,8 +54,8 @@ fun SettingTopBar(viewModel: SettingViewModel = hiltViewModel()) {
     val isWideScreen = isWideScreen()
     Row(verticalAlignment = Alignment.CenterVertically) {
         if (!isWideScreen) {
-            Button(onClick = { viewModel.invokeBackToCategories() }) {
-                Text(text = "<")
+            IconButton(onClick = { viewModel.invokeBackToCategories() }) {
+                Icon(AppIcons.ArrowBack, stringResource(id = R.string.back) )
             }
         }
         Text(text = stringResource(id = R.string.settings))
@@ -146,11 +144,11 @@ fun SettingExpiredDayDialog(isShowDialog: Boolean, onDismiss: () -> Unit) {
                     }
                 })
             }
-            Button(
+            IconButton(
                 onClick = onDismiss,
                 modifier = Modifier.wrapContentSize().align(Alignment.End)
             ) {
-                Text(text = stringResource(id = R.string.close))
+                Icon(AppIcons.Check, stringResource(id = R.string.close))
             }
         }
     }
