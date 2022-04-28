@@ -1,19 +1,23 @@
 package com.jujinkim.note.ui.categorylist
 
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.*
+import androidx.compose.material.icons.rounded.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.window.Dialog
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.jujinkim.note.model.Category
 import com.jujinkim.note.ui.AppDialog
+import com.jujinkim.note.ui.AppIcons
 import com.jujinkim.note.ui.R
 
 @Preview(showBackground = true)
@@ -41,12 +45,19 @@ fun CategoryListTopBar(viewModel: CategoryListViewModel = hiltViewModel()) {
             modifier = Modifier.weight(1f)
         )
         // edit list
-        Button(onClick = { viewModel.invokeToggleCategoryEditMode() }) {
-            Text("edit")
+        IconToggleButton(
+            checked = viewModel.isEditMode,
+            onCheckedChange = { viewModel.invokeToggleCategoryEditMode() }
+        ) {
+            if (viewModel.isEditMode) {
+                Icon(AppIcons.EditOff, stringResource(id = R.string.edit_category_done))
+            } else {
+                Icon(AppIcons.EditNote, stringResource(id = R.string.edit_category))
+            }
         }
         // go to setting
-        Button(onClick = { viewModel.invokeOpenSetting() }) {
-            Text("setting")
+        IconButton(onClick = { viewModel.invokeOpenSetting() }) {
+            Icon(AppIcons.Settings, stringResource(id = R.string.settings))
         }
     }
 }
@@ -92,7 +103,7 @@ fun CategoryAddButton() {
     }
     
     FloatingActionButton(onClick = { isShowDialog = true }) {
-        Text(text = "+")
+        Icon(AppIcons.CreateNewFolder, stringResource(id = R.string.add_category))
     }
 }
 
@@ -105,9 +116,11 @@ fun CategoryAddDialog(isShowDialog: Boolean, onDismiss: () -> Unit) {
             Text(text = stringResource(R.string.add_category))
             TextField(value = input, onValueChange = { input = it}, placeholder = {})
             Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(10.dp)) {
-                Button(onClick = onDismiss) { Text(text = stringResource(R.string.cancel)) }
-                Button(onClick = { viewModel.invokeAddCategory(input); onDismiss() }) {
-                    Text(text = stringResource(R.string.okay))
+                IconButton(onClick = onDismiss) {
+                    Icon(AppIcons.Cancel, stringResource(R.string.cancel))
+                }
+                IconButton(onClick = { viewModel.invokeAddCategory(input); onDismiss() }) {
+                    Icon(AppIcons.Check, stringResource(R.string.okay))
                 }
             }
         }
@@ -123,9 +136,11 @@ fun CategoryEditDialog(isShowDialog: Boolean, category: Category, onDismiss: () 
             Text(text = stringResource(R.string.edit_category_name))
             TextField(value = input, onValueChange = { input = it}, placeholder = {})
             Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(10.dp)) {
-                Button(onClick = onDismiss) { Text(text = stringResource(R.string.cancel)) }
-                Button(onClick = { viewModel.invokeEditCategory(category, input); onDismiss() }) {
-                    Text(text = stringResource(R.string.okay))
+                IconButton(onClick = onDismiss) {
+                    Icon(AppIcons.Cancel, stringResource(R.string.cancel))
+                }
+                IconButton(onClick = { viewModel.invokeEditCategory(category, input); onDismiss() }) {
+                    Icon(AppIcons.Check, stringResource(R.string.okay))
                 }
             }
         }
@@ -139,9 +154,11 @@ fun CategoryRemoveDialog(isShowDialog: Boolean, category: Category, onDismiss: (
         Column(horizontalAlignment = Alignment.CenterHorizontally) {
             Text(text = stringResource(R.string.remove_category_dialog_ps, category.title))
             Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(10.dp)) {
-                Button(onClick = onDismiss) { Text(text = stringResource(R.string.cancel)) }
-                Button(onClick = { viewModel.invokeDeleteCategory(category); onDismiss() }) {
-                    Text(text = stringResource(R.string.okay))
+                IconButton(onClick = onDismiss) {
+                    Icon(AppIcons.Cancel, stringResource(R.string.cancel))
+                }
+                IconButton(onClick = { viewModel.invokeDeleteCategory(category); onDismiss() }) {
+                    Icon(AppIcons.Check, stringResource(R.string.okay))
                 }
             }
         }

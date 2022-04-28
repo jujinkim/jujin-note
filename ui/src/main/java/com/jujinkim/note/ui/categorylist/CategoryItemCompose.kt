@@ -5,8 +5,11 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.Button
+import androidx.compose.material.Icon
+import androidx.compose.material.IconButton
 import androidx.compose.material.Text
+import androidx.compose.material.icons.rounded.Delete
+import androidx.compose.material.icons.rounded.DriveFileRenameOutline
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -16,6 +19,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.jujinkim.note.model.Category
+import com.jujinkim.note.ui.AppIcons
 import com.jujinkim.note.ui.R
 
 @Preview(showBackground = true)
@@ -64,14 +68,14 @@ fun CategoryListItem(
 
         AnimatedVisibility(visible = isEditVisible, enter = scaleIn(), exit = scaleOut()) {
             // edit name
-            Button(onClick = { onEditCategoryClick(category) }) {
-                Text("edit")
+            IconButton(onClick = { onEditCategoryClick(category) }) {
+                Icon(AppIcons.DriveFileRenameOutline, stringResource(id = R.string.edit_category_name))
             }
         }
         AnimatedVisibility(visible = isEditVisible, enter = scaleIn(), exit = scaleOut()) {
-        // remove category
-            Button(onClick = { onRemoveCategoryClick(category) }) {
-                Text("delete")
+            // remove category
+            IconButton(onClick = { onRemoveCategoryClick(category) }) {
+                Icon(AppIcons.Delete, stringResource(id = R.string.remove_category))
             }
         }
     }

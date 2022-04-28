@@ -5,6 +5,7 @@ import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.material.icons.Icons
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -13,6 +14,8 @@ import com.jujinkim.note.core.AppScreen
 import com.jujinkim.note.ui.categorylist.CategoryListContent
 import com.jujinkim.note.ui.notelist.NoteListContent
 import com.jujinkim.note.ui.setting.SettingContent
+
+val AppIcons = Icons.Rounded
 
 @ExperimentalFoundationApi
 @ExperimentalAnimationApi
