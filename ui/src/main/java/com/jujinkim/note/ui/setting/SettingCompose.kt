@@ -100,7 +100,7 @@ fun SettingItemExpiredDay(
 @Composable
 fun SettingExpiredDayDialog(isShowDialog: Boolean, onDismiss: () -> Unit) {
     val viewModel: SettingViewModel = hiltViewModel()
-    val selectedNum = remember { mutableStateOf(viewModel.currentSetting.defaultExpiredDay) }
+    var selectedNum = viewModel.currentSetting.defaultExpiredDay
     val isNoteSavePermanent = viewModel.currentSetting.defaultExpiredDay < 0
     AppDialog(isShowDialog = isShowDialog, onDismiss = onDismiss) {
         Column {
@@ -126,21 +126,21 @@ fun SettingExpiredDayDialog(isShowDialog: Boolean, onDismiss: () -> Unit) {
                 verticalAlignment = Alignment.CenterVertically,
                 modifier = Modifier.clickable {
                     viewModel.invokeSaveSetting(
-                        viewModel.currentSetting.copy(defaultExpiredDay = selectedNum.value)
+                        viewModel.currentSetting.copy(defaultExpiredDay = selectedNum)
                     )
                 }
             ) {
                 RadioButton(selected = !isNoteSavePermanent, onClick = {
                     viewModel.invokeSaveSetting(
-                        viewModel.currentSetting.copy(defaultExpiredDay = selectedNum.value)
+                        viewModel.currentSetting.copy(defaultExpiredDay = selectedNum)
                     )
                 })
                 AndroidView(factory = { context ->
                     NumberPicker(context).apply {
-                        value = selectedNum.value
                         minValue = 1; maxValue = 30
+                        value = selectedNum
                         setOnValueChangedListener { _, _, newVal ->
-                            selectedNum.value = newVal
+                            selectedNum = newVal
                             viewModel.invokeSaveSetting(
                                 viewModel.currentSetting.copy(defaultExpiredDay = newVal)
                             )
