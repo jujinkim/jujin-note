@@ -18,13 +18,14 @@ import com.jujinkim.note.util.Util
 @Preview(showBackground = true)
 @Composable
 fun NoteItemPreview() {
-    NoteItemCompose(Note("testId", "testCatId", "content", 0), {})
+    NoteItemCompose(Note("testId", "testCatId", "content", 0), {}, {})
 }
 
 @ExperimentalFoundationApi
 @Composable
 fun NoteItemCompose(
     note: Note,
+    onClick: (note: Note) -> Unit,
     onLongClick: (note: Note) -> Unit
 ) {
     Column(
@@ -32,7 +33,7 @@ fun NoteItemCompose(
         modifier = Modifier
             .padding(6.dp)
             .combinedClickable(
-                onClick = {},
+                onClick = { onClick(note) },
                 onLongClick = { onLongClick(note) }
             )
     ) {

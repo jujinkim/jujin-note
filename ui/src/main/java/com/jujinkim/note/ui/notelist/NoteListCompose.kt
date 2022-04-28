@@ -45,6 +45,7 @@ fun NoteListContent(viewModel: NoteListViewModel = hiltViewModel()) {
     }
 
     var isShowOptionDialog by remember { mutableStateOf(false) }
+    var isShowActionDialog by remember { mutableStateOf(false) }
     var selectedNoteForDialog by remember { mutableStateOf(Note.new("", "")) }
 
     Scaffold (
@@ -57,8 +58,10 @@ fun NoteListContent(viewModel: NoteListViewModel = hiltViewModel()) {
             ) {
                 items(viewModel.notes) { note ->
                     NoteItemCompose(
-                        note = note
-                    ) { isShowOptionDialog = true; selectedNoteForDialog = note }
+                        note = note,
+                        onClick = { isShowActionDialog = true; selectedNoteForDialog = note },
+                        onLongClick = { isShowOptionDialog = true; selectedNoteForDialog = note }
+                    )
                 }
             }
             NoteInput { viewModel.invokeAddNote(it) }
@@ -69,6 +72,12 @@ fun NoteListContent(viewModel: NoteListViewModel = hiltViewModel()) {
         isShowDialog = isShowOptionDialog,
         note = selectedNoteForDialog,
         onDismiss = { isShowOptionDialog = false }
+    )
+
+    NoteActionDialog(
+        isShowDialog = isShowActionDialog,
+        note = selectedNoteForDialog,
+        onDismiss = { isShowActionDialog = false }
     )
 }
 
@@ -196,6 +205,39 @@ fun NoteOptionDialog(isShowDialog: Boolean, note: Note, onDismiss: () -> Unit) {
                 IconButton(onClick = onDismiss) {
                     Icon(AppIcons.Check, stringResource(R.string.cancel))
                 }
+            }
+        }
+    }
+}
+
+@Composable
+fun NoteActionDialog(isShowDialog: Boolean, note: Note, onDismiss: () -> Unit) {
+    val viewModel: NoteListViewModel = hiltViewModel()
+
+    AppDialog(isShowDialog = isShowDialog, onDismiss = onDismiss) {
+        Row {
+            // Copy
+            IconButton(
+                modifier = Modifier.weight(1f),
+                onClick = { viewModel.copyNoteToClipboard(note) }
+            ) {
+                Icon(AppIcons.ContentCopy, stringResource(R.string.copy_clipboard))
+            }
+
+            // Share
+            IconButton(
+                modifier = Modifier.weight(1f),
+                onClick = { viewModel.shareNote(note) }
+            ) {
+                Icon(AppIcons.Share, stringResource(R.string.share))
+            }
+
+            // Cancel
+            IconButton(
+                modifier = Modifier.weight(1f),
+                onClick = onDismiss
+            ) {
+                Icon(AppIcons.Close, stringResource(R.string.cancel))
             }
         }
     }

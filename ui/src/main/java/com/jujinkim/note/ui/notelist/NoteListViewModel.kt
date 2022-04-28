@@ -55,6 +55,14 @@ class NoteListViewModel @Inject constructor(
         store.dispatch(NoteAction.UpdateNote(note.copy(expiredTime = newExpiredDate)))
     }
 
+    fun copyNoteToClipboard(note: Note) {
+        // Todo()
+    }
+
+    fun shareNote(note: Note) {
+        // Todo()
+    }
+
     override fun onCleared() {
         unsubscribe()
         super.onCleared()
