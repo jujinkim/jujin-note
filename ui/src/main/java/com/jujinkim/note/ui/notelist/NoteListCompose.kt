@@ -101,11 +101,9 @@ fun NoteInput(onNoteAddClick: (note: String) -> Unit) {
 
 @Composable
 fun NoteOptionDialog(isShowDialog: Boolean, note: Note, onDismiss: () -> Unit) {
-    var deleteNoteTimerCount by remember { mutableStateOf(0) }
-    val dismissDialog = { deleteNoteTimerCount = 0; onDismiss() }
     val viewModel: NoteListViewModel = hiltViewModel()
 
-    AppDialog(isShowDialog = isShowDialog, onDismiss = dismissDialog) {
+    AppDialog(isShowDialog = isShowDialog, onDismiss = onDismiss) {
         var newExpiredDate by remember { mutableStateOf(note.expiredTime) }
         val calNow = Calendar.getInstance().apply {
             if (newExpiredDate >= 0) timeInMillis = newExpiredDate
@@ -169,6 +167,7 @@ fun NoteOptionDialog(isShowDialog: Boolean, note: Note, onDismiss: () -> Unit) {
                 horizontalArrangement = Arrangement.spacedBy(10.dp)
             ) {
                 // Delete note
+                var deleteNoteTimerCount by remember { mutableStateOf(0) }
                 if (deleteNoteTimerCount <= 0) {
                     Button(onClick = { deleteNoteTimerCount = 3 }) {
                         Text(text = stringResource(R.string.delete_note))
@@ -177,7 +176,7 @@ fun NoteOptionDialog(isShowDialog: Boolean, note: Note, onDismiss: () -> Unit) {
                     Button(onClick = {
                         deleteNoteTimerCount = 0
                         viewModel.invokeDeleteNote(note)
-                        dismissDialog()
+                        onDismiss()
                     }) {
                         Text(text = deleteNoteTimerCount.toString())
                     }
@@ -188,7 +187,7 @@ fun NoteOptionDialog(isShowDialog: Boolean, note: Note, onDismiss: () -> Unit) {
                 }
 
                 // Cancel
-                Button(onClick = dismissDialog) { Text(text = stringResource(R.string.cancel)) }
+                Button(onClick = onDismiss) { Text(text = stringResource(R.string.cancel)) }
             }
         }
     }
