@@ -137,7 +137,7 @@ fun CategoryEditDialog(isShowDialog: Boolean, category: Category, onDismiss: () 
             TextField(value = input, onValueChange = { input = it}, placeholder = {})
             Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(10.dp)) {
                 IconButton(onClick = onDismiss) {
-                    Icon(AppIcons.Cancel, stringResource(R.string.cancel))
+                    Icon(AppIcons.Close, stringResource(R.string.cancel))
                 }
                 IconButton(onClick = { viewModel.invokeEditCategory(category, input); onDismiss() }) {
                     Icon(AppIcons.Check, stringResource(R.string.okay))
@@ -155,7 +155,7 @@ fun CategoryRemoveDialog(isShowDialog: Boolean, category: Category, onDismiss: (
             Text(text = stringResource(R.string.remove_category_dialog_ps, category.title))
             Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(10.dp)) {
                 IconButton(onClick = onDismiss) {
-                    Icon(AppIcons.Cancel, stringResource(R.string.cancel))
+                    Icon(AppIcons.Close, stringResource(R.string.cancel))
                 }
                 IconButton(onClick = { viewModel.invokeDeleteCategory(category); onDismiss() }) {
                     Icon(AppIcons.Check, stringResource(R.string.okay))
