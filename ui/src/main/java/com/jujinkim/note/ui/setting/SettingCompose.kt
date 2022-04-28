@@ -9,9 +9,7 @@ import androidx.compose.material.Button
 import androidx.compose.material.RadioButton
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -29,7 +27,7 @@ import com.jujinkim.note.ui.isWideScreen
 fun SettingContent(viewModel: SettingViewModel = hiltViewModel()) {
     val activity = (LocalContext.current as? Activity)
     val isWideScreen = isWideScreen()
-    val isShowDialog = remember { mutableStateOf(false) }
+    var isShowDialog by remember { mutableStateOf(false) }
 
     BackHandler {
         if (!isWideScreen) {
@@ -43,13 +41,13 @@ fun SettingContent(viewModel: SettingViewModel = hiltViewModel()) {
         topBar = { SettingTopBar() }
     ) {
         LazyColumn {
-            item { SettingItemExpiredDay(onClick = { isShowDialog.value = true }) }
+            item { SettingItemExpiredDay(onClick = { isShowDialog = true }) }
         }
     }
 
     SettingExpiredDayDialog(
-        isShowDialog = isShowDialog.value,
-        onDismiss = { isShowDialog.value = false }
+        isShowDialog = isShowDialog,
+        onDismiss = { isShowDialog = false }
     )
 }
 

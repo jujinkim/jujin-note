@@ -55,9 +55,9 @@ fun CategoryListTopBar(viewModel: CategoryListViewModel = hiltViewModel()) {
 fun CategoryList(
     viewModel: CategoryListViewModel = hiltViewModel()
 ) {
-    val isShowEditDialog = remember { mutableStateOf(false) }
-    val isShowRemoveDialog = remember { mutableStateOf(false) }
-    val categoryForDialog = remember { mutableStateOf(Category.defaultCategory()) }
+    var isShowEditDialog by remember { mutableStateOf(false) }
+    var isShowRemoveDialog by remember { mutableStateOf(false) }
+    var categoryForDialog by remember { mutableStateOf(Category.defaultCategory()) }
 
     LazyColumn {
         item {
@@ -66,32 +66,32 @@ fun CategoryList(
         items(viewModel.categories) { category ->
             CategoryListItem(
                 category = category,
-                { isShowEditDialog.value = true; categoryForDialog.value = category },
-                { isShowRemoveDialog.value = true; categoryForDialog.value = category }
+                { isShowEditDialog = true; categoryForDialog = category },
+                { isShowRemoveDialog = true; categoryForDialog = category }
             )
         }
     }
 
     CategoryEditDialog(
-        isShowDialog = isShowEditDialog.value,
-        category = categoryForDialog.value,
-        onDismiss = { isShowEditDialog.value = false }
+        isShowDialog = isShowEditDialog,
+        category = categoryForDialog,
+        onDismiss = { isShowEditDialog = false }
     )
     CategoryRemoveDialog(
-        isShowDialog = isShowRemoveDialog.value,
-        category = categoryForDialog.value,
-        onDismiss = { isShowRemoveDialog.value = false }
+        isShowDialog = isShowRemoveDialog,
+        category = categoryForDialog,
+        onDismiss = { isShowRemoveDialog = false }
     )
 }
 
 @Composable
 fun CategoryAddButton() {
-    val isShowDialog = remember { mutableStateOf(false) }
-    if (isShowDialog.value) {
-        CategoryAddDialog(isShowDialog = isShowDialog.value, onDismiss = { isShowDialog.value = false })
+    var isShowDialog by remember { mutableStateOf(false) }
+    if (isShowDialog) {
+        CategoryAddDialog(isShowDialog = isShowDialog, onDismiss = { isShowDialog = false })
     }
     
-    FloatingActionButton(onClick = { isShowDialog.value = true }) {
+    FloatingActionButton(onClick = { isShowDialog = true }) {
         Text(text = "+")
     }
 }
@@ -99,14 +99,14 @@ fun CategoryAddButton() {
 @Composable
 fun CategoryAddDialog(isShowDialog: Boolean, onDismiss: () -> Unit) {
     val viewModel: CategoryListViewModel = hiltViewModel()
-    val input = remember { mutableStateOf("") }
+    var input by remember { mutableStateOf("") }
     AppDialog(isShowDialog = isShowDialog, onDismiss = onDismiss) {
         Column(horizontalAlignment = Alignment.CenterHorizontally) {
             Text(text = stringResource(R.string.add_category))
-            TextField(value = input.value, onValueChange = { input.value = it}, placeholder = {})
+            TextField(value = input, onValueChange = { input = it}, placeholder = {})
             Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(10.dp)) {
                 Button(onClick = onDismiss) { Text(text = stringResource(R.string.cancel)) }
-                Button(onClick = { viewModel.invokeAddCategory(input.value); onDismiss() }) {
+                Button(onClick = { viewModel.invokeAddCategory(input); onDismiss() }) {
                     Text(text = stringResource(R.string.okay))
                 }
             }
@@ -117,14 +117,14 @@ fun CategoryAddDialog(isShowDialog: Boolean, onDismiss: () -> Unit) {
 @Composable
 fun CategoryEditDialog(isShowDialog: Boolean, category: Category, onDismiss: () -> Unit) {
     val viewModel: CategoryListViewModel = hiltViewModel()
-    val input = remember { mutableStateOf("") }
+    var input by remember { mutableStateOf("") }
     AppDialog(isShowDialog = isShowDialog, onDismiss = onDismiss) {
         Column(horizontalAlignment = Alignment.CenterHorizontally) {
             Text(text = stringResource(R.string.edit_category_name))
-            TextField(value = input.value, onValueChange = { input.value = it}, placeholder = {})
+            TextField(value = input, onValueChange = { input = it}, placeholder = {})
             Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(10.dp)) {
                 Button(onClick = onDismiss) { Text(text = stringResource(R.string.cancel)) }
-                Button(onClick = { viewModel.invokeEditCategory(category, input.value); onDismiss() }) {
+                Button(onClick = { viewModel.invokeEditCategory(category, input); onDismiss() }) {
                     Text(text = stringResource(R.string.okay))
                 }
             }

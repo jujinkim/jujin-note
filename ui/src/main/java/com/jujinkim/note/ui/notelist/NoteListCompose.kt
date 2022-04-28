@@ -15,7 +15,6 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.window.Dialog
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.jujinkim.note.model.Note
 import com.jujinkim.note.ui.AppDialog
@@ -46,8 +45,8 @@ fun NoteListContent(viewModel: NoteListViewModel = hiltViewModel()) {
         }
     }
 
-    val isShowOptionDialog = remember { mutableStateOf(false) }
-    val selectedNoteForDialog = remember { mutableStateOf(Note.new("", "")) }
+    var isShowOptionDialog by remember { mutableStateOf(false) }
+    var selectedNoteForDialog by remember { mutableStateOf(Note.new("", "")) }
 
     Scaffold (
         topBar = { NoteListTopBar() }
@@ -60,7 +59,7 @@ fun NoteListContent(viewModel: NoteListViewModel = hiltViewModel()) {
                 items(viewModel.notes) { note ->
                     NoteItemCompose(
                         note = note
-                    ) { isShowOptionDialog.value = true; selectedNoteForDialog.value = note }
+                    ) { isShowOptionDialog = true; selectedNoteForDialog = note }
                 }
             }
             NoteInput { viewModel.invokeAddNote(it) }
@@ -68,9 +67,9 @@ fun NoteListContent(viewModel: NoteListViewModel = hiltViewModel()) {
     }
 
     NoteOptionDialog(
-        isShowDialog = isShowOptionDialog.value,
-        note = selectedNoteForDialog. value,
-        onDismiss = { isShowOptionDialog.value = false }
+        isShowDialog = isShowOptionDialog,
+        note = selectedNoteForDialog,
+        onDismiss = { isShowOptionDialog = false }
     )
 }
 
