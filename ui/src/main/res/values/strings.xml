@@ -5,6 +5,7 @@
     <string name="okay">Okay</string>
     <string name="cancel">Cancel</string>
     <string name="close">Close</string>
+    <string name="back">Back</string>
     <string name="add">Add</string>
     <string name="remove">Remove</string>
     <string name="edit_category">Edit categories</string>

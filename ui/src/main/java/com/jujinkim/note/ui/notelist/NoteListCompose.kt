@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.*
+import androidx.compose.material.icons.rounded.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -17,10 +18,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.jujinkim.note.model.Note
-import com.jujinkim.note.ui.AppDialog
-import com.jujinkim.note.ui.BackHandler
+import com.jujinkim.note.ui.*
 import com.jujinkim.note.ui.R
-import com.jujinkim.note.ui.isWideScreen
 import com.jujinkim.note.util.Util
 import kotlinx.coroutines.delay
 import java.util.*
@@ -78,8 +77,8 @@ fun NoteListTopBar(viewModel: NoteListViewModel = hiltViewModel()) {
     val isWideScreen = isWideScreen()
     Row(verticalAlignment = Alignment.CenterVertically) {
         if (!isWideScreen) {
-            Button(onClick = { viewModel.invokeBackToCategories() }) {
-                Text(text = "<")
+            IconButton(onClick = { viewModel.invokeBackToCategories() }) {
+                Icon(AppIcons.ArrowBack, stringResource(id = R.string.back) )
             }
         }
         Text(text = viewModel.categoryName)
@@ -92,9 +91,13 @@ fun NoteInput(onNoteAddClick: (note: String) -> Unit) {
     val noteInput = remember { mutableStateOf("") }
 
     Row {
-        TextField(modifier = Modifier.weight(1f), value = noteInput.value, onValueChange = { noteInput.value = it })
-        Button(onClick = { onNoteAddClick(noteInput.value); noteInput.value = "" }) {
-            Text(text = stringResource(R.string.add_note))
+        TextField(
+            modifier = Modifier.weight(1f),
+            value = noteInput.value,
+            onValueChange = { noteInput.value = it }
+        )
+        IconButton(onClick = { onNoteAddClick(noteInput.value); noteInput.value = "" }) {
+            Icon(AppIcons.PostAdd, stringResource(id = R.string.add_note))
         }
     }
 }
@@ -136,7 +139,7 @@ fun NoteOptionDialog(isShowDialog: Boolean, note: Note, onDismiss: () -> Unit) {
                     ),
                 )
                 // Change expired date
-                Button(onClick = {
+                IconButton(onClick = {
                     DatePickerDialog(
                         context,
                         { _, year, month, day ->
@@ -153,11 +156,11 @@ fun NoteOptionDialog(isShowDialog: Boolean, note: Note, onDismiss: () -> Unit) {
                         datePicker.minDate = Calendar.getInstance().timeInMillis
                     }.show()
                 }) {
-                    Text(text = stringResource(R.string.change_expired_date))
+                    Icon(AppIcons.Event, stringResource(R.string.change_expired_date))
                 }
                 // Make this note permanent
-                Button(onClick = { viewModel.invokeChangeExpiredDateNote(note, -1) }) {
-                    Text(text = stringResource(R.string.make_expired_date_permanent))
+                IconButton(onClick = { viewModel.invokeChangeExpiredDateNote(note, -1) }) {
+                    Icon(AppIcons.EventBusy, stringResource(R.string.make_expired_date_permanent))
                 }
             }
 
@@ -169,11 +172,11 @@ fun NoteOptionDialog(isShowDialog: Boolean, note: Note, onDismiss: () -> Unit) {
                 // Delete note
                 var deleteNoteTimerCount by remember { mutableStateOf(0) }
                 if (deleteNoteTimerCount <= 0) {
-                    Button(onClick = { deleteNoteTimerCount = 3 }) {
-                        Text(text = stringResource(R.string.delete_note))
+                    IconButton(onClick = { deleteNoteTimerCount = 3 }) {
+                        Icon(AppIcons.Delete, stringResource(R.string.delete_note))
                     }
                 } else {
-                    Button(onClick = {
+                    IconButton(onClick = {
                         deleteNoteTimerCount = 0
                         viewModel.invokeDeleteNote(note)
                         onDismiss()
@@ -187,7 +190,9 @@ fun NoteOptionDialog(isShowDialog: Boolean, note: Note, onDismiss: () -> Unit) {
                 }
 
                 // Cancel
-                Button(onClick = onDismiss) { Text(text = stringResource(R.string.cancel)) }
+                IconButton(onClick = onDismiss) {
+                    Icon(AppIcons.Close, stringResource(R.string.cancel))
+                }
             }
         }
     }
