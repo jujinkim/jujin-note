@@ -159,7 +159,10 @@ fun NoteOptionDialog(isShowDialog: Boolean, note: Note, onDismiss: () -> Unit) {
                     Icon(AppIcons.Event, stringResource(R.string.change_expired_date))
                 }
                 // Make this note permanent
-                IconButton(onClick = { viewModel.invokeChangeExpiredDateNote(note, -1) }) {
+                IconButton(onClick = {
+                    newExpiredDate = -1
+                    viewModel.invokeChangeExpiredDateNote(note, newExpiredDate)
+                }) {
                     Icon(AppIcons.EventBusy, stringResource(R.string.make_expired_date_permanent))
                 }
             }
