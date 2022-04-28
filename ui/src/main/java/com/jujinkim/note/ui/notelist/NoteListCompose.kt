@@ -103,16 +103,15 @@ fun NoteInput(onNoteAddClick: (note: String) -> Unit) {
 fun NoteOptionDialog(isShowDialog: Boolean, note: Note, onDismiss: () -> Unit) {
     var deleteNoteTimerCount by remember { mutableStateOf(0) }
     val dismissDialog = { deleteNoteTimerCount = 0; onDismiss() }
-
-    var newExpiredDate by remember { mutableStateOf(note.expiredTime) }
-    val calNow = Calendar.getInstance().apply {
-        if (newExpiredDate >= 0) timeInMillis = newExpiredDate
-    }
-    val context = LocalContext.current
-
-
     val viewModel: NoteListViewModel = hiltViewModel()
+
     AppDialog(isShowDialog = isShowDialog, onDismiss = dismissDialog) {
+        var newExpiredDate by remember { mutableStateOf(note.expiredTime) }
+        val calNow = Calendar.getInstance().apply {
+            if (newExpiredDate >= 0) timeInMillis = newExpiredDate
+        }
+        val context = LocalContext.current
+
         Column(horizontalAlignment = Alignment.CenterHorizontally) {
             // Content
             Text(
@@ -153,7 +152,7 @@ fun NoteOptionDialog(isShowDialog: Boolean, note: Note, onDismiss: () -> Unit) {
                         calNow.get(Calendar.MONDAY),
                         calNow.get(Calendar.DAY_OF_MONTH)
                     ).apply {
-                        datePicker.minDate = calNow.timeInMillis
+                        datePicker.minDate = Calendar.getInstance().timeInMillis
                     }.show()
                 }) {
                     Text(text = stringResource(R.string.change_expired_date))
