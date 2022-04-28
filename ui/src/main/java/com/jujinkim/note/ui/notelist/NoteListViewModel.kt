@@ -4,6 +4,7 @@ import android.app.Service
 import android.content.ClipData
 import android.content.ClipboardManager
 import android.content.Context
+import android.content.Intent
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
@@ -13,6 +14,7 @@ import com.jujinkim.note.core.AppState
 import com.jujinkim.note.core.NoteAction
 import com.jujinkim.note.core.UiAction
 import com.jujinkim.note.model.Note
+import com.jujinkim.note.ui.R
 import com.jujinkim.note.util.Util
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
@@ -68,7 +70,19 @@ class NoteListViewModel @Inject constructor(
     }
 
     fun shareNote(note: Note) {
-        // Todo()
+        val intent = Intent(Intent.ACTION_SEND).apply {
+            type = "text/plain"
+            putExtra(Intent.EXTRA_TEXT, note.content)
+        }
+
+        val shortContent = note.content.take(20)
+
+        context.startActivity(
+            Intent.createChooser(
+                intent,
+                context.getString(R.string.share_from_note_ps, shortContent)
+            ).apply { addFlags(Intent.FLAG_ACTIVITY_NEW_TASK) }
+        )
     }
 
     override fun onCleared() {
