@@ -14,9 +14,6 @@ import javax.inject.Inject
 class MainViewModel @Inject constructor(
     private val store: Store<AppState>
 ) : ViewModel() {
-    @Inject
-    lateinit var dbThunks: DatabaseThunks
-
     var currentScreen by mutableStateOf(AppScreen.CATEGORY_LIST)
 
     private val unsubscribe = store.subscribe {
