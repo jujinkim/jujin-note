@@ -16,10 +16,12 @@ class CategoryListViewModel @Inject constructor(
 ) : ViewModel() {
     var categories by mutableStateOf(listOf<Category>())
     var isEditMode by mutableStateOf(false)
+    var isDbLoading by mutableStateOf(false)
 
     private val unsubscribe = store.subscribe {
         categories = store.state.categories.toList()    // call toList() to create new list
         isEditMode = store.state.isCategoryEditMode
+        isDbLoading = store.state.isDbLoading.count { it.value == true } > 0
     }
 
     fun invokeAddCategory(name: String) {

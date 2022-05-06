@@ -106,7 +106,9 @@ object NoteReducers {
         }
     }
 
-    fun getFromDbStart(state: AppState) = state.copy()
+    fun getFromDbStart(state: AppState, type: NoteRepoLoadItemType) = state.copy().apply {
+        isDbLoading[type] = true
+    }
 
     @Suppress("UNCHECKED_CAST")
     fun getFromDbSuccess(state: AppState, data: Any?, type: NoteRepoLoadItemType) = state.copy().apply {
@@ -124,8 +126,12 @@ object NoteReducers {
                 categories.clear()
                 categories.addAll(data as MutableList<Category>)
             }
+            else -> {}
         }
+        isDbLoading[type] = false
     }
 
-    fun getFromDbFailed(state: AppState, msg: String) = state.copy()
+    fun getFromDbFailed(state: AppState, msg: String, type: NoteRepoLoadItemType) = state.copy().apply {
+        isDbLoading[type] = false
+    }
 }

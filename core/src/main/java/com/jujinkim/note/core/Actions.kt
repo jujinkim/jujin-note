@@ -22,9 +22,9 @@ sealed class NoteAction {
     class CheckNoteHasExpiredAndUpdate(val note: Note): NoteAction()
     object CheckAllNoteInvalidAndUpdate: NoteAction()
 
-    object GetFromDbStart: NoteAction()
+    data class GetFromDbStart(val type: NoteRepoLoadItemType): NoteAction()
     data class GetFromDbSuccess(val data: Any?, val type: NoteRepoLoadItemType): NoteAction()
-    data class GetFromDbFailed(val msg: String): NoteAction()
+    data class GetFromDbFailed(val msg: String, val type: NoteRepoLoadItemType): NoteAction()
 }
 
 sealed class SettingAction {

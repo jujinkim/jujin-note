@@ -1,9 +1,6 @@
 package com.jujinkim.note.ui.categorylist
 
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.*
@@ -39,11 +36,19 @@ fun CategoryListContent(
 
 @Composable
 fun CategoryListTopBar(viewModel: CategoryListViewModel = hiltViewModel()) {
-    Row(modifier = Modifier.fillMaxWidth()) {
+    Row(modifier = Modifier.fillMaxWidth().padding(start = 4.dp)) {
         Text(
             text = stringResource(R.string.app_name),
-            modifier = Modifier.weight(1f)
+            modifier = Modifier.align(Alignment.CenterVertically)
         )
+        // Loading indicator
+        Spacer(modifier = Modifier.width(4.dp))
+        if (viewModel.isDbLoading) {
+            CircularProgressIndicator(
+                modifier = Modifier.align(Alignment.CenterVertically)
+            )
+        }
+        Spacer(modifier = Modifier.weight(1f))
         // edit list
         IconToggleButton(
             checked = viewModel.isEditMode,

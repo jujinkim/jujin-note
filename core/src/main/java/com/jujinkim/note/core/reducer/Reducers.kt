@@ -55,11 +55,11 @@ class AppReducer @Inject constructor(
             is NoteAction.CheckAllNoteInvalidAndUpdate ->
                 NoteReducers.checkAllNoteInvalidAndUpdate(state, noteRepo)
             is NoteAction.GetFromDbStart ->
-                NoteReducers.getFromDbStart(state)
+                NoteReducers.getFromDbStart(state, action.type)
             is NoteAction.GetFromDbSuccess ->
                 NoteReducers.getFromDbSuccess(state, action.data, action.type)
             is NoteAction.GetFromDbFailed ->
-                NoteReducers.getFromDbFailed(state, action.msg)
+                NoteReducers.getFromDbFailed(state, action.msg, action.type)
         }
 
     private fun settingReducer(state: AppState, action: SettingAction) =

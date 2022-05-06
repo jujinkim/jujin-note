@@ -1,10 +1,7 @@
 package com.jujinkim.note.core
 
 import com.jujinkim.note.data.repo.NoteRepo
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.MainScope
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.*
 import org.reduxkotlin.Thunk
 import javax.inject.Inject
 
@@ -16,7 +13,7 @@ class DatabaseThunks @Inject constructor(private val repo: NoteRepo) {
         id: String = ""
     ): Thunk<AppState> = { dispatch, getState, extraArgs ->
         dbScope.launch {
-            MainScope().launch { dispatch(NoteAction.GetFromDbStart) }
+            MainScope().launch { dispatch(NoteAction.GetFromDbStart(itemType)) }
 
             val data: Any = when (itemType) {
                 NoteRepoLoadItemType.NOTE -> repo.getNote(id)
