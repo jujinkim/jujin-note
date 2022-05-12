@@ -1,36 +1,36 @@
 package com.jujinkim.note.ui.theme
 
 import androidx.compose.foundation.isSystemInDarkTheme
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.darkColors
-import androidx.compose.material.lightColors
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.graphics.Color
 
-private val DarkColorPalette = darkColors(
-    primary = Purple200,
-    primaryVariant = Purple700,
-    secondary = Teal200,
-
-    background = Color.Black,
-    surface = Color.Black,
-    onPrimary = Color.Black,
-    onSecondary = Color.White,
-    onBackground = Color.White,
-    onSurface = Color.White,
+val LightColorPalette = AppColors(
+    primary = Red,
+    secondary = Green,
+    background = White,
+    border = Black,
+    error = RedBright,
+    onPrimary = White,
+    onSecondary = White,
+    onBackground = Black,
+    onDialog = Black,
+    onError = Black,
+    textGrayed = GrayDark,
+    isLight = true
 )
 
-private val LightColorPalette = lightColors(
-    primary = Purple500,
-    primaryVariant = Purple700,
-    secondary = Teal200,
-
-    background = Color.White,
-    surface = Color.White,
-    onPrimary = Color.White,
-    onSecondary = Color.Black,
-    onBackground = Color.Black,
-    onSurface = Color.Black,
+val DarkColorPalette = AppColors(
+    primary = RedDark,
+    secondary = GreenDark,
+    background = Black,
+    border = White,
+    error = RedDark,
+    onPrimary = White,
+    onSecondary = White,
+    onBackground = White,
+    onDialog = White,
+    onError = White,
+    textGrayed = GrayBright,
+    isLight = false
 )
 
 @Composable
@@ -41,10 +41,9 @@ fun JujinNoteTheme(darkTheme: Boolean = isSystemInDarkTheme(), content: @Composa
         LightColorPalette
     }
 
-    MaterialTheme(
+    AppTheme(
         colors = colors,
         typography = Typography,
-        shapes = Shapes,
         content = content
     )
 }

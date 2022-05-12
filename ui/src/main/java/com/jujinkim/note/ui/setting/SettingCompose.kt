@@ -8,11 +8,9 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.*
 import androidx.compose.material.icons.rounded.ArrowBack
 import androidx.compose.material.icons.rounded.Check
-import androidx.compose.material.icons.rounded.Close
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.sp
@@ -88,7 +86,7 @@ fun SettingItemExpiredDay(
                 viewModel.currentSetting.defaultExpiredDay
             ),
             fontSize = 12.sp,
-            color = Color.Gray
+            color = com.jujinkim.note.ui.theme.LocalColors.current.textGrayed
         )
     }
 }
@@ -133,6 +131,7 @@ fun SettingExpiredDayDialog(isShowDialog: Boolean, onDismiss: () -> Unit) {
                 })
                 AndroidView(factory = { context ->
                     NumberPicker(context).apply {
+                        //textColor = com.jujinkim.note.ui.theme.LocalColors.current.onDefault
                         minValue = 1; maxValue = 30
                         value = selectedNum
                         setOnValueChangedListener { _, _, newVal ->

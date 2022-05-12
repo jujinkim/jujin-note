@@ -12,6 +12,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.*
 import com.jujinkim.note.model.Note
 import com.jujinkim.note.ui.R
+import com.jujinkim.note.ui.theme.LocalColors
 import com.jujinkim.note.util.Util
 
 @ExperimentalFoundationApi
@@ -37,10 +38,13 @@ fun NoteItemCompose(
                 onLongClick = { onLongClick(note) }
             )
     ) {
+        val textColor =
+            if (note.isExpired()) LocalColors.current.textGrayed else LocalColors.current.onBackground
         Text(
             text = note.content,
             modifier = Modifier.fillMaxWidth(),
-            fontSize = 16.sp
+            fontSize = 16.sp,
+            color = textColor
         )
         Spacer(modifier = Modifier
             .fillMaxWidth()
@@ -52,13 +56,15 @@ fun NoteItemCompose(
         ) {
             Text(
                 text = Util.millisToDateTimeString(note.generatedTime),
-                fontSize = 12.sp
+                fontSize = 12.sp,
+                color = textColor
             )
-            Text(text = " ~ ", fontSize = 12.sp)
+            Text(text = " ~ ", fontSize = 12.sp, color = textColor)
             Text(
                 text = if (note.expiredTime >= 0) Util.millisToDateString(note.expiredTime)
                 else stringResource(id = R.string.expired_date_permanent),
-                fontSize = 12.sp
+                fontSize = 12.sp,
+                color = textColor
             )
         }
 
