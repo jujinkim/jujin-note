@@ -107,7 +107,11 @@ fun CategoryAddButton() {
         CategoryAddDialog(isShowDialog = isShowDialog, onDismiss = { isShowDialog = false })
     }
     
-    FloatingActionButton(onClick = { isShowDialog = true }) {
+    FloatingActionButton(
+        onClick = { isShowDialog = true },
+        backgroundColor = com.jujinkim.note.ui.theme.LocalColors.current.primary,
+        contentColor = com.jujinkim.note.ui.theme.LocalColors.current.onPrimary
+    ) {
         Icon(AppIcons.CreateNewFolder, stringResource(id = R.string.add_category))
     }
 }
