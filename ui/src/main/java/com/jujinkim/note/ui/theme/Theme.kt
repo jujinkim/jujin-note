@@ -14,7 +14,7 @@ val LightColorPalette = AppColors(
     onBackground = Black,
     onDialog = Black,
     onError = Black,
-    textGrayed = GrayDark,
+    textGrayed = GrayBright,
     isLight = true
 )
 
@@ -29,7 +29,7 @@ val DarkColorPalette = AppColors(
     onBackground = White,
     onDialog = White,
     onError = White,
-    textGrayed = GrayBright,
+    textGrayed = GrayDark,
     isLight = false
 )
 
