@@ -5,6 +5,7 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material.Divider
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
 import androidx.compose.material.Text
@@ -17,6 +18,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.jujinkim.note.model.Category
 import com.jujinkim.note.ui.AppIcons
@@ -44,7 +46,6 @@ fun CategoryListItem(
     val notesCnt = viewModel.getNoteCount(category)
     Row(
         modifier = Modifier
-            .padding(16.dp)
             .clickable { viewModel.invokeOpenNotes(category) }
     ) {
         // drag to reorder
@@ -57,26 +58,29 @@ fun CategoryListItem(
             modifier = Modifier
                 .weight(1f)
                 .align(Alignment.CenterVertically)
+                .padding(8.dp)
         ) {
-            Text(text = category.title, maxLines = 1, overflow = TextOverflow.Ellipsis)
+            Text(text = category.title, maxLines = 1, overflow = TextOverflow.Ellipsis, fontSize = 18.sp)
             Text(
                 text = stringResource(id = if(notesCnt == 1) R.string.pd_note else R.string.pd_notes, notesCnt),
                 maxLines = 1,
-                overflow = TextOverflow.Ellipsis
+                overflow = TextOverflow.Ellipsis,
+                fontSize = 12.sp
             )
         }
 
-        AnimatedVisibility(visible = isEditVisible, enter = scaleIn(), exit = scaleOut()) {
+        AnimatedVisibility(visible = isEditVisible, enter = scaleIn(), exit = scaleOut(), modifier = Modifier.align(Alignment.CenterVertically)) {
             // edit name
             IconButton(onClick = { onEditCategoryClick(category) }) {
                 Icon(AppIcons.DriveFileRenameOutline, stringResource(id = R.string.edit_category_name))
             }
         }
-        AnimatedVisibility(visible = isEditVisible, enter = scaleIn(), exit = scaleOut()) {
+        AnimatedVisibility(visible = isEditVisible, enter = scaleIn(), exit = scaleOut(), modifier = Modifier.align(Alignment.CenterVertically)) {
             // remove category
             IconButton(onClick = { onRemoveCategoryClick(category) }) {
                 Icon(AppIcons.Delete, stringResource(id = R.string.remove_category))
             }
         }
     }
+    Divider()
 }
