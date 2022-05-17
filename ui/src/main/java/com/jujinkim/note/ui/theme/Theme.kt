@@ -2,6 +2,7 @@ package com.jujinkim.note.ui.theme
 
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.runtime.Composable
+import com.google.accompanist.systemuicontroller.rememberSystemUiController
 
 val LightColorPalette = AppColors(
     primary = Red,
@@ -40,6 +41,11 @@ fun JujinNoteTheme(darkTheme: Boolean = isSystemInDarkTheme(), content: @Composa
     } else {
         LightColorPalette
     }
+
+    val systemUiController = rememberSystemUiController()
+    systemUiController.setSystemBarsColor(
+        color = colors.background
+    )
 
     AppTheme(
         colors = colors,
