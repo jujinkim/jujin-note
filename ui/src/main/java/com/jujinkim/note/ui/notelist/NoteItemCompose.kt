@@ -1,6 +1,7 @@
 package com.jujinkim.note.ui.notelist
 
 import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.foundation.border
 import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.Text
@@ -13,6 +14,7 @@ import androidx.compose.ui.unit.*
 import com.jujinkim.note.model.Note
 import com.jujinkim.note.ui.R
 import com.jujinkim.note.ui.theme.LocalColors
+import com.jujinkim.note.ui.theme.Shapes
 import com.jujinkim.note.util.Util
 
 @ExperimentalFoundationApi
@@ -32,18 +34,20 @@ fun NoteItemCompose(
     Column(
         horizontalAlignment = Alignment.End,
         modifier = Modifier
-            .padding(6.dp)
+            .padding(6.dp, 0.dp, 6.dp, 6.dp)
             .combinedClickable(
                 onClick = { onClick(note) },
                 onLongClick = { onLongClick(note) }
             )
+            .border(1.dp, LocalColors.current.border, Shapes.small)
+            .padding(6.dp)
     ) {
         val textColor =
             if (note.isExpired()) LocalColors.current.textGrayed else LocalColors.current.onBackground
         Text(
             text = note.content,
             modifier = Modifier.fillMaxWidth(),
-            fontSize = 16.sp,
+            fontSize = 18.sp,
             color = textColor
         )
         Spacer(modifier = Modifier
