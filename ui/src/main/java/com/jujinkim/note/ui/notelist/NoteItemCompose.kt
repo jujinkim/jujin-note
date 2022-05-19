@@ -39,7 +39,11 @@ fun NoteItemCompose(
                 onClick = { onClick(note) },
                 onLongClick = { onLongClick(note) }
             )
-            .border(1.dp, LocalColors.current.border, Shapes.small)
+            .border(
+                1.dp,
+                if(note.isExpired()) LocalColors.current.textGrayed else LocalColors.current.border,
+                Shapes.small
+            )
             .padding(6.dp)
     ) {
         val textColor =
