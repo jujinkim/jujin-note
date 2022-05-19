@@ -49,7 +49,9 @@ fun NoteListContent(viewModel: NoteListViewModel = hiltViewModel()) {
     var selectedNoteForDialog by remember { mutableStateOf(Note.new("", "")) }
 
     Scaffold (
-        topBar = { NoteListTopBar() }
+        topBar = { NoteListTopBar() },
+        backgroundColor = com.jujinkim.note.ui.theme.LocalColors.current.background,
+        contentColor = com.jujinkim.note.ui.theme.LocalColors.current.onBackground
     ) {
         Column {
             LazyColumn(

@@ -8,6 +8,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
+import com.jujinkim.note.ui.theme.LocalColors
+import com.jujinkim.note.ui.theme.Shapes
 
 @Composable
 fun AppDialog(isShowDialog: Boolean, onDismiss: () -> Unit, content: @Composable () -> Unit) {
@@ -17,8 +19,9 @@ fun AppDialog(isShowDialog: Boolean, onDismiss: () -> Unit, content: @Composable
                 modifier = Modifier
                     .width(320.dp)
                     .wrapContentHeight(),
-                shape = MaterialTheme.shapes.medium,
-                color = MaterialTheme.colors.background,
+                shape = Shapes.medium,
+                color = LocalColors.current.background,
+                contentColor = LocalColors.current.onBackground,
                 content = content
             )
         }

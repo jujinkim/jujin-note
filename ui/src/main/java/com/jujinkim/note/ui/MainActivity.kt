@@ -8,15 +8,11 @@ import androidx.activity.compose.setContent
 import androidx.activity.viewModels
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.foundation.ExperimentalFoundationApi
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.material.Surface
 import androidx.compose.runtime.*
-import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.res.booleanResource
 import androidx.compose.ui.tooling.preview.Preview
 import com.jujinkim.note.ui.theme.JujinNoteTheme
-import com.jujinkim.note.ui.theme.LocalColors
 import dagger.hilt.android.AndroidEntryPoint
 
 val localMainViewModel = compositionLocalOf<MainViewModel> {
@@ -34,14 +30,8 @@ class MainActivity : ComponentActivity() {
 
         setContent {
             JujinNoteTheme {
-                // A surface container using the 'background' color from the theme
-                Surface(
-                    modifier = Modifier.fillMaxSize(),
-                    color = LocalColors.current.background
-                ) {
-                    CompositionLocalProvider(localMainViewModel provides viewModel) {
-                        MainContent()
-                    }
+                CompositionLocalProvider(localMainViewModel provides viewModel) {
+                    MainContent()
                 }
             }
         }

@@ -30,7 +30,9 @@ fun CategoryListContent(
     Scaffold(
         topBar = { CategoryListTopBar() },
         content = { CategoryList() },
-        floatingActionButton = { CategoryAddButton() }
+        floatingActionButton = { CategoryAddButton() },
+        backgroundColor = com.jujinkim.note.ui.theme.LocalColors.current.background,
+        contentColor = com.jujinkim.note.ui.theme.LocalColors.current.onBackground
     )
 }
 

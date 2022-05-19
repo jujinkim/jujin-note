@@ -34,7 +34,9 @@ fun SettingContent(viewModel: SettingViewModel = hiltViewModel()) {
     }
 
     Scaffold (
-        topBar = { SettingTopBar() }
+        topBar = { SettingTopBar() },
+        backgroundColor = com.jujinkim.note.ui.theme.LocalColors.current.background,
+        contentColor = com.jujinkim.note.ui.theme.LocalColors.current.onBackground
     ) {
         LazyColumn {
             item { SettingItemExpiredDay(onClick = { isShowDialog = true }) }
