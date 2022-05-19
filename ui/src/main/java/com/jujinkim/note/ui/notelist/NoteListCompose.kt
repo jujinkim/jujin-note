@@ -86,7 +86,10 @@ fun NoteListContent(viewModel: NoteListViewModel = hiltViewModel()) {
 @Composable
 fun NoteListTopBar(viewModel: NoteListViewModel = hiltViewModel()) {
     val isWideScreen = isWideScreen()
-    Row(verticalAlignment = Alignment.CenterVertically) {
+    Row(
+        modifier = Modifier.height(24.dp),
+        verticalAlignment = Alignment.CenterVertically
+    ) {
         if (!isWideScreen) {
             IconButton(onClick = { viewModel.invokeBackToCategories() }) {
                 Icon(AppIcons.ArrowBack, stringResource(id = R.string.back) )

@@ -38,7 +38,11 @@ fun CategoryListContent(
 
 @Composable
 fun CategoryListTopBar(viewModel: CategoryListViewModel = hiltViewModel()) {
-    Row(modifier = Modifier.fillMaxWidth().padding(start = 4.dp)) {
+    Row(modifier = Modifier
+        .fillMaxWidth()
+        .height(24.dp)
+        .padding(start = 4.dp)
+    ) {
         Text(
             text = stringResource(R.string.app_name),
             modifier = Modifier.align(Alignment.CenterVertically)
