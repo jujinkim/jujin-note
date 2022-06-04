@@ -14,6 +14,7 @@ data class AppState (
     val categories: MutableList<Category> = mutableListOf(),
     val notes: HashMap<CategoryId, Notes> = hashMapOf(),
     val isDbLoading: EnumMap<NoteRepoLoadItemType, Boolean> = EnumMap(NoteRepoLoadItemType::class.java),
+    val draftNotes: HashMap<CategoryId, String> = hashMapOf(),
 
     // category list
     val isCategoryEditMode: Boolean = false,

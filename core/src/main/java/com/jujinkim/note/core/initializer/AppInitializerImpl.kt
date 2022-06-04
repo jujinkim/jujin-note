@@ -1,9 +1,6 @@
 package com.jujinkim.note.core.initializer
 
-import com.jujinkim.note.core.AppState
-import com.jujinkim.note.core.DatabaseThunks
-import com.jujinkim.note.core.NoteRepoLoadItemType
-import com.jujinkim.note.core.SettingAction
+import com.jujinkim.note.core.*
 import org.reduxkotlin.Store
 import javax.inject.Inject
 
@@ -18,6 +15,7 @@ class AppInitializerImpl @Inject constructor() : AppInitializer{
         store.dispatch(SettingAction.LoadSetting)
         store.dispatch(dbThunks.getItems(NoteRepoLoadItemType.CATEGORIES))
         store.dispatch(dbThunks.getItems(NoteRepoLoadItemType.NOTES))
+        store.dispatch(NoteAction.GetAllDraftNotes)
 
         isInitialized = true
     }

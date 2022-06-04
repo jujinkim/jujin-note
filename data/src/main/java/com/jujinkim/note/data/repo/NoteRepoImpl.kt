@@ -1,5 +1,6 @@
 package com.jujinkim.note.data.repo
 
+import com.jujinkim.note.data.AppSharedPref
 import com.jujinkim.note.data.repo.datasource.DatabaseNoteDataSource
 import com.jujinkim.note.model.Note
 import com.jujinkim.note.model.Category
@@ -10,7 +11,8 @@ import javax.inject.Singleton
 
 @Singleton
 class NoteRepoImpl @Inject constructor(
-    private val databaseDataSource: DatabaseNoteDataSource
+    databaseDataSource: DatabaseNoteDataSource,
+    val sharedPref: AppSharedPref
 ): NoteRepo {
     private var dataSource = databaseDataSource
 
@@ -79,6 +81,12 @@ class NoteRepoImpl @Inject constructor(
         dataSource.deleteAllCategories()
         dataSource.saveCategories(source, true)
     }
+
+    override fun saveDraftNote(catId: String, text: String) =
+        sharedPref.saveDraftNote(catId, text)
+
+    override fun getDraftNote(catId: String) =
+        sharedPref.getDraftNote(catId)
 
     override fun getCurrentDataSource() = dataSource
 }

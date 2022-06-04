@@ -11,6 +11,7 @@ import androidx.compose.material.icons.rounded.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
@@ -102,11 +103,14 @@ fun NoteListTopBar(viewModel: NoteListViewModel = hiltViewModel()) {
 
 @Composable
 fun NoteInput(onNoteAddClick: (note: String) -> Unit) {
-    val noteInput = remember { mutableStateOf("") }
+    val viewModel: NoteListViewModel = hiltViewModel()
+    val noteInput = remember { mutableStateOf(viewModel.draftNote) }
 
     Row {
         TextField(
-            modifier = Modifier.weight(1f),
+            modifier = Modifier
+                .weight(1f)
+                .onFocusChanged { if(!it.isFocused) viewModel.invokeUpdateDraftNote(noteInput.value) },
             value = noteInput.value,
             onValueChange = { noteInput.value = it }
         )

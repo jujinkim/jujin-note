@@ -3,6 +3,7 @@ package com.jujinkim.note.core.reducer
 import com.jujinkim.note.core.AppState
 import com.jujinkim.note.core.NoteRepoLoadItemType
 import com.jujinkim.note.core.Notes
+import com.jujinkim.note.data.AppSharedPref
 import com.jujinkim.note.data.repo.NoteRepo
 import com.jujinkim.note.model.Note
 import com.jujinkim.note.model.Category
@@ -75,6 +76,27 @@ object NoteReducers {
             noteRepo.deleteCategory(category)
         }
     }
+
+    fun updateDraftNote(
+        state: AppState,
+        categoryId: String,
+        text: String,
+        sharedPref: AppSharedPref
+    ) = state.copy().apply {
+        draftNotes[categoryId] = text
+        sharedPref.saveDraftNote(categoryId, text)
+    }
+
+    fun getAllDraftNotes(
+        state: AppState,
+        sharedPref: AppSharedPref
+    ) = state.copy(
+        draftNotes = HashMap<String, String>().apply {
+            sharedPref.getAllDraftNotes().forEach {
+                put(it.key, it.value)
+            }
+        }
+    )
 
     fun checkNoteHasExpired(state: AppState, note: Note, noteRepo: NoteRepo) = state.copy().apply {
         if (note.isExpired()) {

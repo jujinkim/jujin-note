@@ -4,6 +4,7 @@ import android.content.Context
 import com.jujinkim.note.core.AppState
 import com.jujinkim.note.core.DatabaseThunks
 import com.jujinkim.note.core.reducer.AppReducer
+import com.jujinkim.note.data.AppSharedPref
 import com.jujinkim.note.data.repo.NoteRepo
 import dagger.Module
 import dagger.Provides
@@ -31,8 +32,12 @@ class ReduxModule {
 
     @Provides
     @Singleton
-    fun provideReducer(noteRepo: NoteRepo, @ApplicationContext context: Context): AppReducer {
-        return AppReducer(noteRepo, context)
+    fun provideReducer(
+        noteRepo: NoteRepo,
+        appSharedPref: AppSharedPref,
+        @ApplicationContext context: Context
+    ): AppReducer {
+        return AppReducer(noteRepo, appSharedPref, context)
     }
 
     @Provides

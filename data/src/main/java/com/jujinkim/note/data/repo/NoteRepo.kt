@@ -22,6 +22,9 @@ interface NoteRepo {
     suspend fun deleteCategory(category: Category)
     suspend fun deleteCategory(catId: String)
 
+    fun saveDraftNote(catId: String, text: String)
+    fun getDraftNote(catId: String): String
+
     suspend fun mirrorNotes(source: List<Note>)
     suspend fun mirrorCategories(source: List<Category>)
 

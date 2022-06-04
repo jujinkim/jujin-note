@@ -2,6 +2,7 @@ package com.jujinkim.note.core.reducer
 
 import android.content.Context
 import com.jujinkim.note.core.*
+import com.jujinkim.note.data.AppSharedPref
 import com.jujinkim.note.data.repo.NoteRepo
 import dagger.hilt.android.qualifiers.ApplicationContext
 import javax.inject.Inject
@@ -10,6 +11,7 @@ import javax.inject.Singleton
 @Singleton
 class AppReducer @Inject constructor(
     private val noteRepo: NoteRepo,
+    private val sharedPref: AppSharedPref,
     @ApplicationContext private val context: Context
 ) {
     fun rootReducer(state: AppState, action: Any) =
@@ -50,6 +52,10 @@ class AppReducer @Inject constructor(
                 val tmpState = NoteReducers.deleteNotes(state, action.relatedNotes, noteRepo)
                 NoteReducers.deleteCategory(tmpState, action.category, noteRepo)
             }
+            is NoteAction.UpdateDraftNote ->
+                NoteReducers.updateDraftNote(state, action.categoryId, action.text, sharedPref)
+            is NoteAction.GetAllDraftNotes ->
+                NoteReducers.getAllDraftNotes(state, sharedPref)
             is NoteAction.CheckNoteHasExpiredAndUpdate ->
                 NoteReducers.checkNoteHasExpired(state, action.note, noteRepo)
             is NoteAction.CheckAllNoteInvalidAndUpdate ->

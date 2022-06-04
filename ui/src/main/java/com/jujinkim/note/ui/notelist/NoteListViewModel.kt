@@ -8,7 +8,6 @@ import android.content.Intent
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
-import androidx.compose.ui.platform.LocalClipboardManager
 import androidx.lifecycle.ViewModel
 import com.jujinkim.note.core.AppState
 import com.jujinkim.note.core.NoteAction
@@ -29,11 +28,13 @@ class NoteListViewModel @Inject constructor(
     var categoryId by mutableStateOf(store.state.categoryId)
     var categoryName by mutableStateOf(store.state.categoryTitle)
     var notes by mutableStateOf(store.state.notes[categoryId]?.toList() ?: listOf())
+    var draftNote by mutableStateOf(store.state.draftNotes[categoryId] ?: "")
 
     private val unsubscribe = store.subscribe {
         categoryId = store.state.categoryId
         categoryName = store.state.categoryTitle
         notes = store.state.notes[categoryId]?.toList() ?: listOf()
+        draftNote = store.state.draftNotes[categoryId] ?: ""
     }
 
     fun invokeBackToCategories() {
@@ -84,6 +85,11 @@ class NoteListViewModel @Inject constructor(
             ).apply { addFlags(Intent.FLAG_ACTIVITY_NEW_TASK) }
         )
     }
+
+    fun invokeUpdateDraftNote(text: String) {
+        store.dispatch(NoteAction.UpdateDraftNote(categoryId, text))
+    }
+
 
     override fun onCleared() {
         unsubscribe()
