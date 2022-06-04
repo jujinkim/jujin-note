@@ -16,7 +16,7 @@ class CategoryListViewModel @Inject constructor(
 ) : ViewModel() {
     var categories by mutableStateOf(listOf<Category>())
     var isEditMode by mutableStateOf(false)
-    var isDbLoading by mutableStateOf(false)
+    var isDbLoading by mutableStateOf(store.state.isDbLoading.count { it.value == true } > 0)
 
     private val unsubscribe = store.subscribe {
         categories = store.state.categories.toList()    // call toList() to create new list
