@@ -109,10 +109,12 @@ fun NoteInput(onNoteAddClick: (note: String) -> Unit) {
     Row {
         TextField(
             modifier = Modifier
-                .weight(1f)
-                .onFocusChanged { if(!it.isFocused) viewModel.invokeUpdateDraftNote(noteInput.value) },
+                .weight(1f),
             value = noteInput.value,
-            onValueChange = { noteInput.value = it }
+            onValueChange = {
+                noteInput.value = it
+                viewModel.invokeUpdateDraftNote(noteInput.value)
+            }
         )
         IconButton(onClick = { onNoteAddClick(noteInput.value); noteInput.value = "" }) {
             Icon(AppIcons.PostAdd, stringResource(id = R.string.add_note))

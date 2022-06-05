@@ -87,6 +87,7 @@ class NoteListViewModel @Inject constructor(
     }
 
     fun invokeUpdateDraftNote(text: String) {
+        draftNote = text
         store.dispatch(NoteAction.UpdateDraftNote(categoryId, text))
     }
 
